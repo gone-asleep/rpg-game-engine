@@ -66,6 +66,7 @@
     <Compile Include="Entities\Stats\StatModifier.cs" />
     <Compile Include="Entities\Stats\EntityStats.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
+    <Compile Include="Global\FactoriesProvider.cs" />
     <Compile Include="Global\GlobalLookup.cs" />
     <Compile Include="Global\SkillStatInfo.cs" />
     <Compile Include="Global\SkillStatInfoFunction.cs" />

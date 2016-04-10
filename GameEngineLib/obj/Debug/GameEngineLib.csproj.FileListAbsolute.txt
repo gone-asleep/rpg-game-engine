@@ -6,3 +6,8 @@ D:\Projects\GameEngine\GameEngineLib\obj\Debug\GameEngineLib.dll
 D:\Projects\GameEngine\GameEngineLib\obj\Debug\GameEngineLib.pdb
 D:\Projects\GameEngine\GameEngineLib\bin\Debug\OpenTK.dll
 D:\Projects\GameEngine\GameEngineLib\bin\Debug\OpenTK.xml
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\GameEngineLib.dll.config
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\GameEngineLib.dll
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\GameEngineLib.pdb
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.dll
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.pdb
