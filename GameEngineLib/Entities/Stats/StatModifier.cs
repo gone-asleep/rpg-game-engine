@@ -44,7 +44,7 @@ namespace GameEngine {
         }
 
         public StatModifier() {
-            this.Id = GlobalLookup.GetNextID();
+            this.Id = GlobalLookup.IDs.Next();
             this.Stats = new StatValue[Enum.GetValues(typeof(StatType)).Length];
         }
 

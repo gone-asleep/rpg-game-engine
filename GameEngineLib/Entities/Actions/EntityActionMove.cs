@@ -27,12 +27,12 @@ namespace GameEngine.Actions {
         public override void Update(Entity entity) {
             if (this.IsCurrent()) {
                 float timeFromStart = 0.0f;
-                if (GlobalLookup.CurrentTick >= this.EndTime) {
+                if (GlobalLookup.Time.CheckOccured(this.EndTime)) {
                     this.IsFinished = true;
                     timeFromStart = this.EndTime - this.StartTime;
                     //Debug.WriteLine("Finished Moving To {0}", entity.Position);
                 } else {
-                    timeFromStart = GlobalLookup.CurrentTick - this.StartTime;
+                    timeFromStart = GlobalLookup.Time.Current - this.StartTime;
                     //Debug.WriteLine("Finished Moving To {0}", entity.Position);
                 }
                 entity.Position = this.InitialPosition + (UpdateDelta * timeFromStart);

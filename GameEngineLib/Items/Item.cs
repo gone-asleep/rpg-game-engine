@@ -11,7 +11,7 @@ namespace GameEngine.Items {
         public int Id { get; private set; }
         public string Name { get; private set; }
         public float Quality { get; private set; }
-        public ItemTypeCode TypeCode { get; private set; }
+        public ItemType TypeCode { get; private set; }
         public ItemClassCode ClassCode { get; private set; }
         public int Count { get; private set; }
         public ItemEquipType EquipType { get; private set; }
@@ -34,9 +34,9 @@ namespace GameEngine.Items {
             }
         }
 
-        public Item(string name, ItemTypeCode typeCode, ItemClassCode classCode, ItemEquipType equipType) {
+        public Item(string name, ItemType typeCode, ItemClassCode classCode, ItemEquipType equipType) {
             this.Name = name;
-            this.Id = GlobalLookup.GetNextID();
+            this.Id = GlobalLookup.IDs.Next();
             this.Count = 1;
             this.EquipType = equipType;
             this.ClassCode = classCode;

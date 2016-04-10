@@ -15,7 +15,7 @@ namespace GameEngine.Effects {
         public StatModifier Modifier { get; private set; }
 
         public Effect(EffectTypeCode typeCode, EffectClassCode classCode, float startTime, float endTime) {
-            this.Id = GlobalLookup.GetNextID();
+            this.Id = GlobalLookup.IDs.Next();
             this.TypeCode = typeCode;
             this.ClassCode = classCode;
             this.StartTime = startTime;

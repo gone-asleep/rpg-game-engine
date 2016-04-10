@@ -5,31 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine {
+namespace GameEngine.Factories {
     public class ItemFactory {
-        Dictionary<ItemTypeCode, Func<ItemFactoryTypeProfile, Item>> Factories { get; set; }
+        private Dictionary<ItemType, Func<ItemFactoryTypeProfile, Item>> Factories { get; set; }
 
         public ItemFactory() {
-            this.Factories = new Dictionary<ItemTypeCode, Func<ItemFactoryTypeProfile, Item>>();
+            this.Factories = new Dictionary<ItemType, Func<ItemFactoryTypeProfile, Item>>();
         }
 
-        public void AddFactoryConstructor(ItemTypeCode code, Func<ItemFactoryTypeProfile, Item> func) {
+        public void Add(ItemType code, Func<ItemFactoryTypeProfile, Item> func) {
             this.Factories.Add(code, func);
         }
 
-        public Item Generate(ItemTypeCode typeCode, ItemFactoryTypeProfile profile = new ItemFactoryTypeProfile()) {
+        public Item Generate(ItemType typeCode, ItemFactoryTypeProfile profile = new ItemFactoryTypeProfile()) {
             if (this.Factories.ContainsKey(typeCode)) {
                 return Factories[typeCode](profile);
             }
             return null;
-        }
-    }
-
-    public struct ItemFactoryTypeProfile {
-        public int Level;
-
-        public ItemFactoryTypeProfile(int level) {
-            Level = level;
         }
     }
 }

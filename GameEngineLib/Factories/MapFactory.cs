@@ -6,15 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Factories {
-
     public class MapFactory {
-        Dictionary<MapTypeCode, Func<MapFactoryTypeProfile, Map>> Factories { get; set; }
+        private Dictionary<MapTypeCode, Func<MapFactoryTypeProfile, Map>> Factories { get; set; }
 
         public MapFactory() {
             this.Factories = new Dictionary<MapTypeCode, Func<MapFactoryTypeProfile, Map>>();
         }
 
-        public void AddFactoryConstructor(MapTypeCode code, Func<MapFactoryTypeProfile, Map> func) {
+        public void Add(MapTypeCode code, Func<MapFactoryTypeProfile, Map> func) {
             this.Factories.Add(code, func);
         }
 
@@ -27,11 +26,4 @@ namespace GameEngine.Factories {
         }
     }
 
-    public struct MapFactoryTypeProfile {
-        public int Level;
-
-        public MapFactoryTypeProfile(int level) {
-            Level = level;
-        }
-    }
 }

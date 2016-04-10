@@ -18,9 +18,9 @@ namespace GameEngine {
 
         public EntityStats() {
             this.stats = new List<StatModifier>();
-            this.computedStats = new float[GlobalLookup.StatCount];
-            this.baseLineStats = new float[GlobalLookup.StatCount];
-            this.skillLevelStats = new float[GlobalLookup.SkillCount];
+            this.computedStats = new float[GlobalLookup.StatTypeCount];
+            this.baseLineStats = new float[GlobalLookup.StatTypeCount];
+            this.skillLevelStats = new float[GlobalLookup.SkillTypeCount];
         }
 
         public void Refresh() {

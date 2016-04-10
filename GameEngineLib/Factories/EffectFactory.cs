@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Factories {
     public class EffectFactory {
-        Dictionary<EffectTypeCode, Func<EffectFactoryTypeProfile, Effect>> Factories { get; set; }
+        private Dictionary<EffectTypeCode, Func<EffectFactoryTypeProfile, Effect>> Factories { get; set; }
 
         public EffectFactory() {
             this.Factories = new Dictionary<EffectTypeCode, Func<EffectFactoryTypeProfile, Effect>>();
         }
 
-        public void AddFactoryConstructor(EffectTypeCode code, Func<EffectFactoryTypeProfile, Effect> func) {
+        public void Add(EffectTypeCode code, Func<EffectFactoryTypeProfile, Effect> func) {
             this.Factories.Add(code, func);
         }
 
@@ -23,14 +23,6 @@ namespace GameEngine.Factories {
                 return entity;
             }
             return null;
-        }
-    }
-
-    public struct EffectFactoryTypeProfile {
-        public int Level;
-
-        public EffectFactoryTypeProfile(int level) {
-            Level = level;
         }
     }
 }

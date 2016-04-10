@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine {
+namespace GameEngine.Factories {
     public class EntityFactory {
-        Dictionary<EntityTypeCode, Func<EntityFactoryTypeProfile, Entity>> Factories { get; set; }
+        private Dictionary<EntityTypeCode, Func<EntityFactoryTypeProfile, Entity>> Factories { get; set; }
 
          public EntityFactory() {
              this.Factories = new Dictionary<EntityTypeCode, Func<EntityFactoryTypeProfile, Entity>>();
         }
 
-         public void AddFactoryConstructor(EntityTypeCode code, Func<EntityFactoryTypeProfile, Entity> func) {
+         public void Add(EntityTypeCode code, Func<EntityFactoryTypeProfile, Entity> func) {
             this.Factories.Add(code, func);
         }
 
@@ -24,14 +24,6 @@ namespace GameEngine {
                 return entity;
             }
             return null;
-        }
-    }
-
-    public struct EntityFactoryTypeProfile {
-        public int Level;
-
-        public EntityFactoryTypeProfile(int level) {
-            Level = level;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Items {
-    public enum ItemTypeCode {
+    public enum ItemType {
         LongSword,
         ShortSword,
         HealingPotion

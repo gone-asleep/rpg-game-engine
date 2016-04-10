@@ -59,6 +59,9 @@
     <Compile Include="Entities\Stats\StatModifierType.cs" />
     <Compile Include="Entities\Stats\StatType.cs" />
     <Compile Include="Factories\EffectFactory.cs" />
+    <Compile Include="Factories\EffectFactoryProfile.cs" />
+    <Compile Include="Factories\EntityFactoryProfile.cs" />
+    <Compile Include="Factories\ItemFactoryProfile.cs" />
     <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Actions\EntityActionBase.cs" />
@@ -66,8 +69,11 @@
     <Compile Include="Entities\Stats\StatModifier.cs" />
     <Compile Include="Entities\Stats\EntityStats.cs" />
     <Compile Include="Factories\EntityFactory.cs" />
-    <Compile Include="Global\FactoriesProvider.cs" />
+    <Compile Include="Factories\MapFactoryProfile.cs" />
+    <Compile Include="Global\Providers\FactoriesProvider.cs" />
     <Compile Include="Global\GlobalLookup.cs" />
+    <Compile Include="Global\Providers\IDProvider.cs" />
+    <Compile Include="Global\Providers\TimeProvider.cs" />
     <Compile Include="Global\SkillStatInfo.cs" />
     <Compile Include="Global\SkillStatInfoFunction.cs" />
     <Compile Include="Global\WeaponStatInfo.cs" />
