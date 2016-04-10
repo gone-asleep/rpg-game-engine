@@ -14,30 +14,22 @@ namespace GameEngine.Actions {
         public Vector2 InitialPosition;
         public Vector2 DestinationPosition;
        
-        public EntityActionMove(Entity entity, Vector2 toLocation) : base() {
+        public EntityActionMove(Entity entity, Vector2 toLocation, float nextAvailableTime) : base() {
             this.InitialPosition = entity.FinalPosition;
             this.DestinationPosition = toLocation;
             Vector2 delta = this.DestinationPosition - this.InitialPosition;
             float timeTillEnd = entity.Stats.Get(StatType.Speed) / delta.Length();
             this.UpdateDelta = timeTillEnd * delta;
-            this.StartTime = entity.FinalActionTime;
-            this.EndTime = entity.FinalActionTime + (1.0f / timeTillEnd);
+            this.StartTime = nextAvailableTime;
+            this.EndTime = nextAvailableTime + (1.0f / timeTillEnd);
         }
 
-        public override void Update(Entity entity) {
-            if (this.IsCurrent()) {
-                float timeFromStart = 0.0f;
-                if (GlobalLookup.Time.CheckOccured(this.EndTime)) {
-                    this.IsFinished = true;
-                    timeFromStart = this.EndTime - this.StartTime;
-                    //Debug.WriteLine("Finished Moving To {0}", entity.Position);
-                } else {
-                    timeFromStart = GlobalLookup.Time.Current - this.StartTime;
-                    //Debug.WriteLine("Finished Moving To {0}", entity.Position);
-                }
-                entity.Position = this.InitialPosition + (UpdateDelta * timeFromStart);
-                
-            } 
+        public override void Do(Entity entity, float elapsedTime) {
+            entity.Move(this.InitialPosition + (UpdateDelta * elapsedTime), true);
+        }
+
+        public override void Finish(Entity entity) {
+            entity.Move(this.InitialPosition + (UpdateDelta * this.TotalTime), true);
         }
     }
 }

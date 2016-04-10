@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Items {
     public enum ItemEquipType : int {
-        None = 0,
         Head = 1,
         Neck = 2,
-        Chest = 4,
-        Legs = 8,
-        Feet = 16,
-        Arms = 32,
-        Shoulders = 64,
-        Back = 128,
-        LeftHand = 256,
-        RightHand = 512
+        Chest = 3,
+        Legs = 4,
+        Feet = 5,
+        Arms = 6,
+        Shoulders = 7,
+        Back = 8,
+        LeftHand = 9,
+        RightHand = 10
     }
 }

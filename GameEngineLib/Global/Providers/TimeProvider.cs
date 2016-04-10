@@ -13,10 +13,13 @@ namespace GameEngine.Global.Providers {
         /// </summary>
         public float Current { get; set; }
 
-        public bool CheckOccured(float tick) {
-            return tick <= Current;
+        public bool CheckOccured(EntityActionBase action) {
+            return action.EndTime <= Current;
         }
 
+        public bool CheckCurrent(EntityActionBase action) {
+            return Current >= action.StartTime && Current < action.EndTime;
+        }
 
 
         public TimeProvider() {

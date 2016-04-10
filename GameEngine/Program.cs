@@ -20,7 +20,7 @@ namespace GameEngine {
             });
 
             GlobalLookup.Factories.Items.Add(ItemType.HealingPotion, (profile) => {
-                Item item = new Item("Potion of Healing", ItemType.HealingPotion, ItemClassCode.Potion, ItemEquipType.None);
+                Item item = new Item("Potion of Healing", ItemType.HealingPotion, ItemClassCode.Potion, ItemEquipType.LeftHand);
                 item.Modifier.Define(StatType.Strength, StatValueOp.Add, 4.0F);
                 return item;
             });
@@ -71,11 +71,10 @@ namespace GameEngine {
             GlobalLookup.AddPlayer(GlobalLookup.Factories.Entities.Generate(typeCode: EntityTypeCode.Human));
             GlobalLookup.World.SetMap(GlobalLookup.Factories.Maps.Generate(typeCode: MapTypeCode.Test));
 
-            GlobalLookup.Player.Inventory.Add(h1);
-            GlobalLookup.Player.Inventory.Add(h2); // these stack
-            GlobalLookup.Player.Inventory.Add(sword); // this does not
-
-            GlobalLookup.Player.Equip(sword); // this fires on the first tick
+            GlobalLookup.Player.Receive(h1, true);
+            GlobalLookup.Player.Receive(h2, true); // these stack
+            GlobalLookup.Player.Receive(sword, true); // this does not
+            GlobalLookup.Player.Equip(sword, true); // this fires on the first tick
         }
         static void Main(string[] args) {
             Initialize();

@@ -8,28 +8,19 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Actions {
     public class EntityActionUnequip : EntityActionBase {
-         Item equipedItem;
+        Item equipedItem;
 
-         public EntityActionUnequip(Entity entity,  Item item) {
+        public EntityActionUnequip(Entity entity, Item item, float nextAvailableTime) {
             this.equipedItem = item;
-            this.StartTime = entity.FinalActionTime;
-            this.EndTime = entity.FinalActionTime + 1;
+            this.StartTime = nextAvailableTime;
+            this.EndTime = nextAvailableTime + 1;
         }
 
-         public override void Update(Entity entity) {
-            if (this.IsCurrent()) {
-                if (entity.Inventory.Contains(equipedItem)) {
-                    if (entity.Equiped.ContainsKey(equipedItem.EquipType) && entity.Equiped[equipedItem.EquipType] == equipedItem) {
-                        entity.Stats.RemoveModifier(equipedItem.Modifier);
-                        if (equipedItem.EnchantmentModifier != null) {
-                            entity.Stats.RemoveModifier(equipedItem.EnchantmentModifier);
-                        }
-                        entity.Equiped.Remove(equipedItem.EquipType);
-                    }
-                }
-                this.IsFinished = true;
-                Debug.WriteLine("Unequiped Item {0}", equipedItem.Name);
-            }
+        public override void Do(Entity entity, float time) {
+        }
+
+        public override void Finish(Entity entity) {
+            entity.Unequip(equipedItem, true);
         }
     }
 }

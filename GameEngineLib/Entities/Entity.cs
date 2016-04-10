@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GameEngine.Items;
 using GameEngine.Global;
+using System.Diagnostics;
+using GameEngine.Entities.Stats;
 
 namespace GameEngine {
     public class Entity {
@@ -30,30 +32,37 @@ namespace GameEngine {
         // currently used for queued actions
         public float FinalActionTime { get; set; }
 
+        public float NextAvailableActionTime {
+            get {
+                return (FinalActionTime > GlobalLookup.Time.Current) ? GlobalLookup.Time.Current : FinalActionTime;
+            }
+        }
+
         /// <summary>
         /// Current stats of this entity
         /// </summary>
         public EntityStats Stats { get; private set; }
 
+
         /// <summary>
         /// Equipment Applied to this entity
         /// </summary>
-        public Dictionary<ItemEquipType, Item> Equiped { get; private set; }
+        private Item[] Equiped { get; set; }
 
         /// <summary>
         /// Effects Applied to this Entity
         /// </summary>
-        public List<Effect> Effects { get; private set; }
+        private List<Effect> Effects { get; set; }
 
         /// <summary>
         /// Entities Inventory
         /// </summary>
-        public EntityInventory Inventory { get; private set; }
+        private EntityInventory Inventory { get; set; }
 
         /// <summary>
         /// Entities currently Queued Actions
         /// </summary>
-        public Queue<EntityActionBase> Actions { get; private set; }
+        private Queue<EntityActionBase> Actions { get; set; }
 
 
         public Entity(string name) {
@@ -62,51 +71,101 @@ namespace GameEngine {
             this.Position = new Vector2(0, 0);
             this.FinalPosition = new Vector2(0, 0);
             this.Stats = new EntityStats();
-            this.Equiped = new Dictionary<ItemEquipType, Item>();
+            this.Equiped = new Item[GlobalLookup.EquipTypeCount];
             this.Effects = new List<Effect>();
             this.Inventory = new EntityInventory(60);
             this.Actions = new Queue<EntityActionBase>();
+
+
         }
 
         /// <summary>
         /// Adds a Move command to the entities Action Queue
         /// </summary>
         /// <param name="position">The new position of the entity</param>
-        public void Move(Vector2 position) {
-            if (FinalActionTime < GlobalLookup.Time.Current) {
-                FinalActionTime = GlobalLookup.Time.Current;
+        public void Move(Vector2 position, bool immediate) {
+            if (immediate) {
+                this.Position = position;
+            } else {
+                var action = new EntityActionMove(this, position, NextAvailableActionTime);
+                this.FinalActionTime = action.EndTime;
+                this.FinalPosition = position;
+                this.Actions.Enqueue(action);
             }
-            var action = new EntityActionMove(this, position);
-            this.FinalActionTime = action.EndTime;
-            this.FinalPosition = action.DestinationPosition;
-            this.Actions.Enqueue(action);
         }
 
         /// <summary>
         /// Adds a Equip command to the Entities Action Queue
         /// </summary>
         /// <param name="item">The item that will be added</param>
-        public void Equip(Item item) {
-            if (FinalActionTime < GlobalLookup.Time.Current) {
-                FinalActionTime = GlobalLookup.Time.Current;
+        public void Equip(Item item, bool immediate) {
+            if (immediate) {
+                // check that the entity has the item in inventory 
+                if (!this.Inventory.Contains(item)) {
+                    Debug.WriteLine("Failed: Unequiped Item {0}, Not Present in inventory", item.Name);
+                    return;
+                }
+                // check that the item is currently equiped
+                if (this.Equiped[(int)item.EquipType] != null) {
+                    Debug.WriteLine("Failed: Unequiped Item {0}, Item Currently Equiped to Slot", item.Name);
+                    return;
+                }
+
+                this.Stats.AddModifier(item.Modifier);
+                if (item.EnchantmentModifier != null) {
+                    Stats.AddModifier(item.EnchantmentModifier);
+                }
+                this.Equiped[(int)item.EquipType] = item;
+            } else {
+                var action = new EntityActionUnequip(this, item, NextAvailableActionTime);
+                this.FinalActionTime = action.EndTime;
+                this.Actions.Enqueue(action);
             }
-            var action = new EntityActionUnequip(this, item);
-            this.FinalActionTime = action.EndTime;
-            this.Actions.Enqueue(action);
         }
 
         /// <summary>
         /// Adds a Unequip command to the Entities Action Queue
         /// </summary>
         /// <param name="item"></param>
-        public void Unequip(Item item) {
-            if (FinalActionTime < GlobalLookup.Time.Current) {
-                FinalActionTime = GlobalLookup.Time.Current;
+        public void Unequip(Item item, bool immediate) {
+            if (immediate) {
+                // check that the entity has the item in inventory 
+                if (!this.Inventory.Contains(item)) {
+                    Debug.WriteLine("Failed: Unequiped Item {0}, Not Present in inventory", item.Name);
+                    return;
+                }
+                // check that the item is currently equiped
+                if (this.Equiped[(int)item.EquipType] != item) {
+                    Debug.WriteLine("Failed: Unequiped Item {0}, Not Currently Equiped", item.Name);
+                    return;
+                }
+
+                this.Stats.RemoveModifier(item.Modifier);
+                if (item.EnchantmentModifier != null) {
+                    Stats.RemoveModifier(item.EnchantmentModifier);
+                }
+                this.Equiped[(int)item.EquipType] = null;
+            } else {
+                var action = new EntityActionUnequip(this, item, NextAvailableActionTime);
+                this.FinalActionTime = action.EndTime;
+                this.Actions.Enqueue(action);
             }
-            var action = new EntityActionUnequip(this, item);
-            this.FinalActionTime = action.EndTime;
-            this.Actions.Enqueue(action);
         }
+
+
+        /// <summary>
+        /// Adds an Item to the players inventory
+        /// </summary>
+        /// <param name="item">The Item to be recieved</param>
+        /// <param name="immediate"></param>
+        public void Receive(Item item, bool immediate) {
+            if (immediate) {
+                this.Inventory.Add(item);
+            } else {
+                
+            }
+        }
+
 
         /// <summary>
         /// Refreshes the Entities state, Performs the current action in the action queue and 
@@ -144,14 +203,13 @@ namespace GameEngine {
 
         public override string ToString() {
             string debugStr = this.Name + "[" + this.Stats.ToString();
-            
-            foreach (var name in Enum.GetNames(typeof(ItemEquipType))) {
-                ItemEquipType equipType = (ItemEquipType)Enum.Parse(typeof(ItemEquipType), name);
-                if (this.Equiped.ContainsKey(equipType)) {
-                    debugStr += name + ":" + this.Equiped[equipType] + ",  ";
 
+            foreach (var item in this.Equiped) {
+                if (item != null) {
+                    debugStr += item.EquipType + ":" + item + ",  ";
                 }
             }
+            
             return debugStr + "]";
         }
     }
