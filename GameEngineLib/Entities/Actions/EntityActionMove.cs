@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameEngine.Entities.Stats;
+using GameEngine.Global;
 
 namespace GameEngine.Actions {
     public class EntityActionMove : EntityActionBase {

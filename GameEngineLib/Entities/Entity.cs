@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameEngine.Items;
+using GameEngine.Global;
 
 namespace GameEngine {
     public class Entity {
