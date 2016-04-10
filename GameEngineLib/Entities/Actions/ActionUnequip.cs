@@ -7,20 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Actions {
-    public class EntityActionUnequip : EntityActionBase {
+    public class ActionUnequip : ActionBase {
         Item equipedItem;
 
-        public EntityActionUnequip(Entity entity, Item item, float nextAvailableTime) {
+        public ActionUnequip(Entity entity, Item item, float nextAvailableTime) {
             this.equipedItem = item;
             this.StartTime = nextAvailableTime;
             this.EndTime = nextAvailableTime + 1;
+            this.TargetEntity = entity;
         }
 
-        public override void Do(Entity entity, float time) {
+        protected override void Do(float time) {
         }
 
-        public override void Finish(Entity entity) {
-            entity.Unequip(equipedItem, true);
+        protected override void Finish() {
+            this.TargetEntity.Unequip(equipedItem);
         }
     }
 }

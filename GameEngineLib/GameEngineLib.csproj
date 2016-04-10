@@ -51,9 +51,9 @@
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Effects\EffectClass.cs" />
     <Compile Include="Effects\EffectType.cs" />
-    <Compile Include="Entities\Actions\EntityActionEquip.cs" />
-    <Compile Include="Entities\Actions\EntityActionMove.cs" />
-    <Compile Include="Entities\Actions\EntityActionUnequip.cs" />
+    <Compile Include="Entities\Actions\ActionEquip.cs" />
+    <Compile Include="Entities\Actions\ActionMove.cs" />
+    <Compile Include="Entities\Actions\ActionUnequip.cs" />
     <Compile Include="Entities\EntityType.cs" />
     <Compile Include="Entities\Skills\SkillType.cs" />
     <Compile Include="Entities\Stats\StatModifierType.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="Factories\Profiles\ItemFactoryProfile.cs" />
     <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Actions\EntityActionBase.cs" />
+    <Compile Include="Entities\Actions\ActionBase.cs" />
     <Compile Include="Entities\EntityInventory.cs" />
     <Compile Include="Entities\Stats\StatModifier.cs" />
     <Compile Include="Entities\Stats\EntityStats.cs" />

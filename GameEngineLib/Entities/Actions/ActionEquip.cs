@@ -8,21 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Actions {
-    public class EntityActionEquip : EntityActionBase{
-        
+    public class ActionEquip : ActionBase{
         Item equipedItem;
 
-        public EntityActionEquip(Entity entity, Item item, float nextAvailableTime) {
+        public ActionEquip(Entity entity, Item item, float nextAvailableTime) {
             this.equipedItem = item;
             this.StartTime = nextAvailableTime;
             this.EndTime = nextAvailableTime + 1;
+            this.TargetEntity = entity;
         }
 
-        public override void Do(Entity entity, float elapsedTime) {
+        protected override void Do( float elapsedTime) {
         }
 
-        public override void Finish(Entity entity) {
-            entity.Equip(equipedItem, true);
+        protected override void Finish() {
+            this.TargetEntity.Equip(equipedItem);
         }
     }
 }

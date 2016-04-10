@@ -6,7 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine {
-    public class EntityActionBase {
+    public class ActionBase {
+        /// <summary>
+        /// The target entity who is performing the action/ or is being acted upon by the action
+        /// </summary>
+        public Entity TargetEntity { get; protected set; }
 
         /// <summary>
         /// The Starting Time for this Action
@@ -30,21 +34,22 @@ namespace GameEngine {
         public bool IsFinished { get; protected set; }
         
 
-        public void Update(Entity entity) {
-            if (GlobalLookup.Time.CheckCurrent(this)) {
-                this.Do(entity, GlobalLookup.Time.Current - this.StartTime);
-            } 
-            if (GlobalLookup.Time.CheckOccured(this)) {
-                this.Finish(entity);
-                this.IsFinished = true;
-            }
+        public void UpdateAction(float currentTime) {
+            // the action is current, do the action
+            this.Do(currentTime - this.StartTime);
         }
 
-        public virtual void Do(Entity entity, float elapsedTime) {
+        public void FinishAction(float currentTime) {
+            this.Finish();
+            this.IsFinished = true;
+        }
+
+
+        protected virtual void Do(float elapsedTime) {
 
         }
 
-        public virtual void Finish(Entity entity) {
+        protected virtual void Finish() {
 
         }
     }

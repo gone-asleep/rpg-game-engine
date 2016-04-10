@@ -71,10 +71,10 @@ namespace GameEngine {
             GlobalLookup.AddPlayer(GlobalLookup.Factories.Entities.Generate(typeCode: EntityTypeCode.Human));
             GlobalLookup.World.SetMap(GlobalLookup.Factories.Maps.Generate(typeCode: MapTypeCode.Test));
 
-            GlobalLookup.Player.Receive(h1, true);
-            GlobalLookup.Player.Receive(h2, true); // these stack
-            GlobalLookup.Player.Receive(sword, true); // this does not
-            GlobalLookup.Player.Equip(sword, true); // this fires on the first tick
+            GlobalLookup.Player.Receive(h1);
+            GlobalLookup.Player.Receive(h2); // these stack
+            GlobalLookup.Player.Receive(sword); // this does not
+            GlobalLookup.Player.Equip(sword); // this fires on the first tick
         }
         static void Main(string[] args) {
             Initialize();
