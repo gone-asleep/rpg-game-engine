@@ -10,8 +10,8 @@ namespace GameEngine {
         public float EndTime { get; protected set; }
         public bool IsFinished { get; protected set; }
         public bool IsCurrent() {
-            return (GameGlobal.CurrentTick >= StartTime && GameGlobal.CurrentTick < EndTime) 
-                || (GameGlobal.CurrentTick >= StartTime && !this.IsFinished);
+            return (GlobalLookup.CurrentTick >= StartTime && GlobalLookup.CurrentTick < EndTime) 
+                || (GlobalLookup.CurrentTick >= StartTime && !this.IsFinished);
         }
 
 

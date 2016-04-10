@@ -8,3 +8,4 @@ D:\Projects\GameEngine\GameEngine\obj\Debug\GameEngine.exe
 D:\Projects\GameEngine\GameEngine\obj\Debug\GameEngine.pdb
 D:\Projects\GameEngine\GameEngine\bin\Debug\OpenTK.dll
 D:\Projects\GameEngine\GameEngine\bin\Debug\OpenTK.xml
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\GameEngine.exe.config

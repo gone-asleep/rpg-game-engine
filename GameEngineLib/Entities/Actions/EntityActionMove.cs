@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameEngine.Entities.Stats;
 
 namespace GameEngine.Actions {
     public class EntityActionMove : EntityActionBase {
@@ -25,12 +26,12 @@ namespace GameEngine.Actions {
         public override void Update(Entity entity) {
             if (this.IsCurrent()) {
                 float timeFromStart = 0.0f;
-                if (GameGlobal.CurrentTick >= this.EndTime) {
+                if (GlobalLookup.CurrentTick >= this.EndTime) {
                     this.IsFinished = true;
                     timeFromStart = this.EndTime - this.StartTime;
                     //Debug.WriteLine("Finished Moving To {0}", entity.Position);
                 } else {
-                    timeFromStart = GameGlobal.CurrentTick - this.StartTime;
+                    timeFromStart = GlobalLookup.CurrentTick - this.StartTime;
                     //Debug.WriteLine("Finished Moving To {0}", entity.Position);
                 }
                 entity.Position = this.InitialPosition + (UpdateDelta * timeFromStart);

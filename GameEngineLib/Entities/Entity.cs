@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameEngine.Items;
 
 namespace GameEngine {
     public class Entity {
@@ -55,7 +56,7 @@ namespace GameEngine {
 
 
         public Entity(string name) {
-            this.ID = GameGlobal.GetNextID();
+            this.ID = GlobalLookup.GetNextID();
             this.Name = name;
             this.Position = new Vector2(0, 0);
             this.FinalPosition = new Vector2(0, 0);
@@ -71,8 +72,8 @@ namespace GameEngine {
         /// </summary>
         /// <param name="position">The new position of the entity</param>
         public void Move(Vector2 position) {
-            if (FinalActionTime < GameGlobal.CurrentTick) {
-                FinalActionTime = GameGlobal.CurrentTick;
+            if (FinalActionTime < GlobalLookup.CurrentTick) {
+                FinalActionTime = GlobalLookup.CurrentTick;
             }
             var action = new EntityActionMove(this, position);
             this.FinalActionTime = action.EndTime;
@@ -85,8 +86,8 @@ namespace GameEngine {
         /// </summary>
         /// <param name="item">The item that will be added</param>
         public void Equip(Item item) {
-            if (FinalActionTime < GameGlobal.CurrentTick) {
-                FinalActionTime = GameGlobal.CurrentTick;
+            if (FinalActionTime < GlobalLookup.CurrentTick) {
+                FinalActionTime = GlobalLookup.CurrentTick;
             }
             var action = new EntityActionUnequip(this, item);
             this.FinalActionTime = action.EndTime;
@@ -98,8 +99,8 @@ namespace GameEngine {
         /// </summary>
         /// <param name="item"></param>
         public void Unequip(Item item) {
-            if (FinalActionTime < GameGlobal.CurrentTick) {
-                FinalActionTime = GameGlobal.CurrentTick;
+            if (FinalActionTime < GlobalLookup.CurrentTick) {
+                FinalActionTime = GlobalLookup.CurrentTick;
             }
             var action = new EntityActionUnequip(this, item);
             this.FinalActionTime = action.EndTime;
@@ -112,7 +113,7 @@ namespace GameEngine {
         /// </summary>
         public void Refresh() {
             foreach (var effect in this.Effects) {
-                if (effect.EndTime <= GameGlobal.CurrentTick) {
+                if (effect.EndTime <= GlobalLookup.CurrentTick) {
                     this.Stats.RemoveModifier(effect.Modifier);
                     this.Effects.Remove(effect);
                 }

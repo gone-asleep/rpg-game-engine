@@ -1,10 +1,11 @@
-﻿using System;
+﻿using GameEngine.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine {
+namespace GameEngine.Items {
     public class Item {
         public int Id { get; private set; }
         public string Name { get; private set; }
@@ -13,8 +14,8 @@ namespace GameEngine {
         public ItemClassCode ClassCode { get; private set; }
         public int Count { get; private set; }
         public ItemEquipType EquipType { get; private set; }
-        public EntityStatsModifier Modifier { get; private set; }
-        public EntityStatsModifier EnchantmentModifier { get; private set; }
+        public StatModifier Modifier { get; private set; }
+        public StatModifier EnchantmentModifier { get; private set; }
 
         public bool CanAdd(Item item) {
             if (item.ClassCode.HasFlag(ItemClassCode.Stackable)) {
@@ -34,12 +35,12 @@ namespace GameEngine {
 
         public Item(string name, ItemTypeCode typeCode, ItemClassCode classCode, ItemEquipType equipType) {
             this.Name = name;
-            this.Id = GameGlobal.GetNextID();
+            this.Id = GlobalLookup.GetNextID();
             this.Count = 1;
             this.EquipType = equipType;
             this.ClassCode = classCode;
             this.TypeCode = typeCode;
-            this.Modifier = new EntityStatsModifier();
+            this.Modifier = new StatModifier();
         }
 
         public override string ToString() {

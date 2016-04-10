@@ -1,11 +1,12 @@
-﻿using System;
+﻿using GameEngine.Entities.Stats;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine {
-    public class EntityStatsModifier {
+    public class StatModifier {
         public struct StatValue {
             public float Value;
             public StatValueOp Operation;
@@ -41,8 +42,8 @@ namespace GameEngine {
             this[(int)type] = new StatValue(value, op);
         }
 
-        public EntityStatsModifier() {
-            this.Id = GameGlobal.GetNextID();
+        public StatModifier() {
+            this.Id = GlobalLookup.GetNextID();
             this.Stats = new StatValue[Enum.GetValues(typeof(StatType)).Length];
         }
 

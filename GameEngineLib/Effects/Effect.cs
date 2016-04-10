@@ -11,15 +11,15 @@ namespace GameEngine.Effects {
         public EffectClassCode ClassCode { get; private set; }
         public float EndTime { get; private set; }
         public float StartTime { get; private set; }
-        public EntityStatsModifier Modifier { get; private set; }
+        public StatModifier Modifier { get; private set; }
 
         public Effect(EffectTypeCode typeCode, EffectClassCode classCode, float startTime, float endTime) {
-            this.Id = GameGlobal.GetNextID();
+            this.Id = GlobalLookup.GetNextID();
             this.TypeCode = typeCode;
             this.ClassCode = classCode;
             this.StartTime = startTime;
             this.EndTime = endTime;
-            this.Modifier = new EntityStatsModifier();
+            this.Modifier = new StatModifier();
         }
     }
 }

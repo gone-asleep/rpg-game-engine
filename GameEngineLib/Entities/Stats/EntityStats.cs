@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameEngine.Entities.Skills;
+using GameEngine.Entities.Stats;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace GameEngine {
     public class EntityStats {
-        private List<EntityStatsModifier> stats;
+        private List<StatModifier> stats;
         private float[] baseLineStats;
         private float[] computedStats;
         private float[] skillLevelStats;
         private bool requiresRefresh = false;
 
         public EntityStats() {
-            this.stats = new List<EntityStatsModifier>();
-            this.computedStats = new float[GameGlobal.StatCount];
-            this.baseLineStats = new float[GameGlobal.StatCount];
-            this.skillLevelStats = new float[GameGlobal.SkillCount];
+            this.stats = new List<StatModifier>();
+            this.computedStats = new float[GlobalLookup.StatCount];
+            this.baseLineStats = new float[GlobalLookup.StatCount];
+            this.skillLevelStats = new float[GlobalLookup.SkillCount];
         }
 
         public void Refresh() {
@@ -55,7 +57,7 @@ namespace GameEngine {
             if (requiresRefresh) {
                 this.Refresh();
             }
-            return GameGlobal.CalculateSkillEffect(i, type, skillLevelStats[(int)i], computedStats[(int)type]);
+            return GlobalLookup.CalculateSkillEffect(i, type, skillLevelStats[(int)i], computedStats[(int)type]);
         }
 
         public void Set(StatType type, float amount) {
@@ -76,12 +78,12 @@ namespace GameEngine {
             this.skillLevelStats[(int)type] += amount;
         }
 
-        public void AddModifier(EntityStatsModifier stats) {
+        public void AddModifier(StatModifier stats) {
             this.requiresRefresh = true;
             this.stats.Add(stats);
         }
 
-        public void RemoveModifier(EntityStatsModifier stats) {
+        public void RemoveModifier(StatModifier stats) {
             this.requiresRefresh = true;
             this.stats = this.stats.Where(i => i.Id != stats.Id).ToList();
         }
