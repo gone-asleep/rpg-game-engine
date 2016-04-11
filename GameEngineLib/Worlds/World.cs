@@ -11,13 +11,18 @@ using System.Threading.Tasks;
 
 namespace GameEngine {
     public class World {
+
         public List<Entity> Entities { get; set; }
+
+        public List<Item> Items { get; set; }
+        
         public SortedList Actions { get; set; }
         
         public Map Map { get; private set; }
         
         public World() {
             this.Entities = new List<Entity>();
+            this.Items = new List<Item>();
             this.Actions = new SortedList();
         }
 

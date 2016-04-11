@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Worlds {
-    public enum MapTypeCode : int {
+    public enum MapType : int {
         Test = 0
     }
 }

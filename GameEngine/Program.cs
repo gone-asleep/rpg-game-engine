@@ -15,30 +15,19 @@ namespace GameEngine {
         static void Initialize() {
             GlobalLookup.Factories.Items.Add(ItemType.LongSword, (profile) => {
                 Item sword = new Item("A Sword", ItemType.LongSword, ItemClassCode.Weapon, ItemEquipType.LeftHand);
-                sword.Modifier.Define(StatType.Strength, StatValueOp.Add, 4.0F);
+                sword.Modifier.Define(StatType.Strength, StatModifierType.Add, 4.0F);
                 return sword;
             });
 
             GlobalLookup.Factories.Items.Add(ItemType.HealingPotion, (profile) => {
                 Item item = new Item("Potion of Healing", ItemType.HealingPotion, ItemClassCode.Potion, ItemEquipType.LeftHand);
-                item.Modifier.Define(StatType.Strength, StatValueOp.Add, 4.0F);
+                item.Modifier.Define(StatType.Strength, StatModifierType.Add, 4.0F);
                 return item;
             });
 
-            GlobalLookup.Factories.Entities.Add(EntityTypeCode.Human, (profile) => {
-                Entity entity = new Entity("Ken");
-                entity.Stats.Set(StatType.Agility, 1.0F);
-                entity.Stats.Set(StatType.Charisma, 1.0F);
-                entity.Stats.Set(StatType.Inteligence, 1.0F);
-                entity.Stats.Set(StatType.Luck, 1.0F);
-                entity.Stats.Set(StatType.Stamina, 1.0F);
-                entity.Stats.Set(StatType.Strength, 1.0F);
-                entity.Stats.Set(StatType.Wisdom, 1.0F);
-                entity.Stats.Set(StatType.Speed, 20.0F);
-                return entity;
-            });
+            
 
-            GlobalLookup.Factories.Maps.Add(MapTypeCode.Test, (profile) => {
+            GlobalLookup.Factories.Maps.Add(MapType.Test, (profile) => {
                 var map = new Map(20, 20, 40);
                 map.Tiles[5][5] = 3;
                 map.SetTiles(0, 0, 3, 3, 1);
@@ -47,17 +36,17 @@ namespace GameEngine {
             });
 
 
-            GlobalLookup.Factories.Effects.Add(EffectTypeCode.Strengthen, (profile) => {
+            GlobalLookup.Factories.Effects.Add(EffectType.Strengthen, (profile) => {
                 float seconds = 30.0f;
-                Effect effect = new Effect(EffectTypeCode.Strengthen, EffectClassCode.EntityStatusEffect ,GlobalLookup.Time.Current ,GlobalLookup.Time.Current + seconds);
-                effect.Modifier.Define(StatType.Strength, StatValueOp.Multiply, 1.5f); // +50%
+                Effect effect = new Effect(EffectType.Strengthen, EffectClass.EntityStatusEffect ,GlobalLookup.Time.Current ,GlobalLookup.Time.Current + seconds);
+                effect.Modifier.Define(StatType.Strength, StatModifierType.Multiply, 1.5f); // +50%
                 return effect;
             });
 
-            GlobalLookup.Factories.Effects.Add(EffectTypeCode.Weaken, (profile) => {
+            GlobalLookup.Factories.Effects.Add(EffectType.Weaken, (profile) => {
                 float seconds = 30.0f;
-                Effect effect = new Effect(EffectTypeCode.Weaken, EffectClassCode.EntityStatusEffect, GlobalLookup.Time.Current, GlobalLookup.Time.Current + seconds);
-                effect.Modifier.Define(StatType.Strength, StatValueOp.Multiply, 0.5f); //-50%
+                Effect effect = new Effect(EffectType.Weaken, EffectClass.EntityStatusEffect, GlobalLookup.Time.Current, GlobalLookup.Time.Current + seconds);
+                effect.Modifier.Define(StatType.Strength, StatModifierType.Multiply, 0.5f); //-50%
                 return effect;
             });
 
@@ -68,8 +57,8 @@ namespace GameEngine {
             var h1 = GlobalLookup.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
             var h2 = GlobalLookup.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
             sword = GlobalLookup.Factories.Items.Generate(typeCode: ItemType.LongSword);
-            GlobalLookup.AddPlayer(GlobalLookup.Factories.Entities.Generate(typeCode: EntityTypeCode.Human));
-            GlobalLookup.World.SetMap(GlobalLookup.Factories.Maps.Generate(typeCode: MapTypeCode.Test));
+            GlobalLookup.AddPlayer(GlobalLookup.Factories.Entities.Generate(typeCode: EntityType.Human));
+            GlobalLookup.World.SetMap(GlobalLookup.Factories.Maps.Generate(typeCode: MapType.Test));
 
             GlobalLookup.Player.Receive(h1);
             GlobalLookup.Player.Receive(h2); // these stack
@@ -77,8 +66,13 @@ namespace GameEngine {
             GlobalLookup.Player.Equip(sword); // this fires on the first tick
         }
         static void Main(string[] args) {
-            Initialize();
-            CreateTestData();
+            //Initialize();
+            //CreateTestData();
+            for (float i = 0.001f; i < 1.0; i+= 0.01f) {
+
+                Console.WriteLine(new string('*', (int)(10 * Extensions.NextGaussian(i, .5, 1))));
+            }
+            Console.ReadKey();
         }
     }
 }

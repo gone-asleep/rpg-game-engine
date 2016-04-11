@@ -29,13 +29,13 @@ namespace GameEngine {
                 for (int i = 0; i < stats.Count; i++) { // columns
                     for (int j = 0; j < computedStats.Length; j++) { // rows
                         switch (stats[i][j].Operation) {
-                            case StatValueOp.Add:
+                            case StatModifierType.Add:
                                 computedStats[j] += stats[i][j].Value;
                                 break;
-                            case StatValueOp.Multiply:
+                            case StatModifierType.Multiply:
                                 computedStats[j] *= stats[i][j].Value;
                                 break;
-                            case StatValueOp.None:
+                            case StatModifierType.None:
                                 break;
                         }
                     }
@@ -59,6 +59,14 @@ namespace GameEngine {
                 this.Refresh();
             }
             return GlobalLookup.CalculateSkillEffect(i, type, skillLevelStats[(int)i], computedStats[(int)type]);
+        }
+
+        public void ImportStats(float[] values) {
+            Array.Copy(values, this.baseLineStats, this.baseLineStats.Length);
+        }
+
+        public void ImportSkills(float[] values) {
+            Array.Copy(values, this.skillLevelStats, this.skillLevelStats.Length);
         }
 
         public void Set(StatType type, float amount) {

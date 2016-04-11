@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Entities {
-    public enum EntityTypeCode {
+    public enum EntityType {
         Human,
         Orc,
         Goblin,

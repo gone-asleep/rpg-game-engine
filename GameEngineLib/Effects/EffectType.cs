@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Effects {
-    public enum EffectTypeCode {
+    public enum EffectType {
         Strengthen, // these should be real entries
         Weaken,
     }

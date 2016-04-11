@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Effects {
-    public enum EffectClassCode {
+    public enum EffectClass {
         EntityStatusEffect
     }
 }

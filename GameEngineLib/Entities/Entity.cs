@@ -63,17 +63,14 @@ namespace GameEngine {
         /// </summary>
         private EntityInventory Inventory { get; set; }
 
-        public Entity(string name) {
-            this.ID = GlobalLookup.IDs.Next();
-            this.Name = name;
+        public Entity(int id) {
+            this.ID = id;
             this.Position = new Vector2(0, 0);
             this.FinalPosition = new Vector2(0, 0);
             this.Stats = new EntityStats();
             this.Equiped = new Item[GlobalLookup.EquipTypeCount];
             this.Effects = new List<Effect>();
             this.Inventory = new EntityInventory(60);
-
-
         }
 
         /// <summary>

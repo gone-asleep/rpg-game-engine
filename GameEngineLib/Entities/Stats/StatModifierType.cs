@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Entities.Stats {
-    public enum StatValueOp : int {
+    public enum StatModifierType : int {
         None = 0,
         Multiply = 1,
         Add = 2

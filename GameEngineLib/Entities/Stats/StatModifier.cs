@@ -10,13 +10,13 @@ namespace GameEngine {
     public class StatModifier {
         public struct StatValue {
             public float Value;
-            public StatValueOp Operation;
-            public StatValue(float value, StatValueOp op) {
+            public StatModifierType Operation;
+            public StatValue(float value, StatModifierType op) {
                 Value = value;
                 Operation = op;
             }
             public override string ToString() {
-                if (this.Operation == StatValueOp.Add) {
+                if (this.Operation == StatModifierType.Add) {
                     return "+" + Value;
                 } else {
                     return Value * 100 + "%";
@@ -39,7 +39,7 @@ namespace GameEngine {
             set { Stats[(int)i] = value; }
         }
 
-        public void Define(StatType type, StatValueOp op, float value) {
+        public void Define(StatType type, StatModifierType op, float value) {
             this[(int)type] = new StatValue(value, op);
         }
 
@@ -52,7 +52,7 @@ namespace GameEngine {
             string debugStr = "";
             foreach (var name in Enum.GetNames(typeof(StatType))) {
                 StatType type = (StatType)Enum.Parse(typeof(StatType), name);
-                if (this[type].Operation != StatValueOp.None) {
+                if (this[type].Operation != StatModifierType.None) {
                     debugStr += name + ":" + this[type].ToString() + ",  ";
                 }
             }

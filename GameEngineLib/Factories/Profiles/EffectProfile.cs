@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Factories {
-    public struct MapFactoryTypeProfile {
+    public struct EffectProfile {
         public int Level;
 
-        public MapFactoryTypeProfile(int level) {
+        public EffectProfile(int level) {
             Level = level;
         }
     }

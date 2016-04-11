@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Factories {
-    public struct ItemFactoryTypeProfile {
+    public struct ItemProfile {
         public int Level;
 
-        public ItemFactoryTypeProfile(int level) {
+        public ItemProfile(int level) {
             Level = level;
         }
     }

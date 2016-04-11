@@ -1,0 +1,45 @@
+﻿Interesting reference of how FFX does damange based on stats calculations
+http://www.gamefaqs.com/ps2/197344-final-fantasy-x/faqs/31381
+
+// note that this method is made to use integers and not floats, so the equation could be normalized.. and then scalled to any value
+
+
+
+
+// calculating attack 
+// x - sum of involved stats
+// y - base damage of attack
+a = ((1/32)*(x^3) + 32)*(y/16)
+
+
+
+
+// or in simpler terms
+a = (1/512)*(x^3+1024)*y
+
+// normalized 
+// ((x^3+16979328000) y)/2164864320000
+
+
+// calculating defense
+// x - defense value
+d = (x-280.4)^2/110 + 16
+d = (1/110)*(x-280.4)^2 + 16
+
+//  normalized
+d = (5226980004 - 143004x + x^2)/7152750
+
+
+//calculating modified attack
+//m = a * d/730
+//m = ((1/512)*(x^3+1024)*y) * ((1/110)*(x-280.4)^2 + 16) * (1/730)
+
+//calculating damage
+//m*(730-(51d - d^2*(1/11))*(1/10))*(1/730)
+
+
+// noticed this tutorial has a very simular stat implementation
+http://howtomakeanrpg.com/a/how-to-make-an-rpg-stats.html
+
+
+
