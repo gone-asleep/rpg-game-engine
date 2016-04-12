@@ -1,0 +1,50 @@
+﻿The RPG Game Engine
+-- yet to have an official name
+
+base parts of the system
+
+Entities 
+--------------------------------------------------------------------------------------
+Entities include all playable and non-playable characters in the game. entities can also 
+be used for inanimate objects such as chests which can be thought of as essentially a dead
+character with an inventory.
+
+Entities are comprised of
+Inventory Items
+Skills
+Stats
+Effects
+Type information such as race, gender.. visual aspects
+
+
+
+Skills
+--------------------------------------------------------------------------------------
+Skills will be the primary mode of leveling up in the game. skills will include things such as
+Spellcraft, Fishing, Swiming, Bartering, Weapon Use. Skill will not include individual item/spell information. 
+For example "Fireball Spell" is not a skill but "Destruction Magic" may be. Skills can generalize use 
+of serveral things or activities in the game where they apply. There should be many different types of skills
+present in the game to give variaty of choice and the ability to build a character from how a player uses a character
+
+Skill Leveling
+--------------------------------------------------------------------------------------
+Skills level up when used. using fireball in tern uses the desctruction magic skill adding to its
+skill level. the amount that is added to the skill will be stored in the same number as the skill level
+the amount that is added will decrease as the skill level increases
+current formula could be
+skill inc. = percentDropPerLevel^floor(skill lvl)
+When skills are leveled and reach the next whole number (rounding down) the skill has leveled up.
+
+Skill Points
+--------------------------------------------------------------------------------------
+When a skill levels up a small fraction of skill points will be given to the player. this fraction when accumulated 
+will go above 1. when this happens one skill point will be available to the player for use in increasing the players base line
+stats. This number can go above 1.. 2... n... in which n skill points will be useable.
+when skill points are used they are subracted from the skill point number leaving any remaining skill points and the fraction which
+represents the progress to the next skill point.
+
+Skill Point Bonuses
+--------------------------------------------------------------------------------------
+at certain amounts of skill points more options for player development may become available.. such as additional skills
+or % bonuses to resistences and other secondary base line stats (not available for increase by normal skill point usage)
+ 
