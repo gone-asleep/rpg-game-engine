@@ -54,6 +54,10 @@
       <Project>{929de6e0-e649-48d4-88a2-8f40d9c8d4d3}</Project>
       <Name>GameEngineLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEntities\GameEntities.csproj">
+      <Project>{800c8578-380c-48f7-8060-e081cc05d402}</Project>
+      <Name>GameEntities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\SourceMaterial.txt" />

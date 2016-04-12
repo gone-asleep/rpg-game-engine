@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityCollection.cs" />
+    <Compile Include="Effects\EffectInformation.cs" />
     <Compile Include="Entities\Human.cs" />
+    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Items\Weapons.cs" />
+    <Compile Include="Maps\MapConstructors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +52,7 @@
       <Name>GameEngineLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Entities {
     public enum EntityType {
+        HumanPlayer, //special for now
         Human,
         Orc,
         Goblin,

@@ -1,4 +1,5 @@
 ﻿using GameEngine;
+using GameEngine.Entities;
 using GameEngine.Entities.Skills;
 using GameEngine.Entities.Stats;
 using GameEngine.Factories;
@@ -11,13 +12,12 @@ using System.Threading.Tasks;
 
 namespace GameEntities.Entities {
     public static class Human {
+        private static bool isLoaded = false;
 
         private static readonly float[][] statsMultByOccupation = new float[][] {
            /*Warrior*/ new float[] { /*strength*/1.0f, /*Stamina*/1.0f, /*Wisdom*/1.0f, /*Inteligence*/1.0f, /*Charisma*/1.0f, /*Agility*/1.0f, /*Luck*/1.0f, /*Speed*/1.0f }, 
            /* Thief */ new float[] { /*strength*/1.0f, /*Stamina*/1.0f, /*Wisdom*/1.0f, /*Inteligence*/1.0f, /*Charisma*/1.0f, /*Agility*/1.0f, /*Luck*/1.0f, /*Speed*/1.0f }, 
         };
-        
-
 
         public static readonly Func<EntityProfile, Entity> HumanConstructor = (profile) => {
             Entity entity = new Entity(GlobalLookup.IDs.Next());
@@ -47,5 +47,11 @@ namespace GameEntities.Entities {
             return entity;
         };
 
+        public static void Load() {
+            if (!isLoaded) {
+                GlobalLookup.Factories.Entities.Add(EntityType.HumanPlayer, Human.HumanConstructor);
+                isLoaded = true;
+            }
+        }
     }
 }
