@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Items {
     public enum ItemClassCode : long {
-        Stackable = 1 >> 63,
-        Potion = 1 | Stackable,
+        Potion = 1,
         Weapon = 2,
     }
 }

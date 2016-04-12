@@ -19,37 +19,40 @@ namespace GameEntities.Entities {
            /* Thief */ new float[] { /*strength*/1.0f, /*Stamina*/1.0f, /*Wisdom*/1.0f, /*Inteligence*/1.0f, /*Charisma*/1.0f, /*Agility*/1.0f, /*Luck*/1.0f, /*Speed*/1.0f }, 
         };
 
+        private static readonly float[][] skillMultByOccupation = new float[][] {
+           /*Warrior*/ new float[] { /*strength*/1.0f, /*Stamina*/1.0f, /*Wisdom*/1.0f, /*Inteligence*/1.0f, /*Charisma*/1.0f, /*Agility*/1.0f, /*Luck*/1.0f, /*Speed*/1.0f }, 
+           /* Thief */ new float[] { /*strength*/1.0f, /*Stamina*/1.0f, /*Wisdom*/1.0f, /*Inteligence*/1.0f, /*Charisma*/1.0f, /*Agility*/1.0f, /*Luck*/1.0f, /*Speed*/1.0f }, 
+        };
+
+        private static float[] CalculateStatsByOccupationAndLevel(int level, int occupationIndex) {
+            return statsMultByOccupation[occupationIndex].Select(i => i * level).ToArray();
+        }
+        private static float[] CalculateSkillsByOccupationAndLevel(int level, int occupationIndex) {
+            return skillMultByOccupation[occupationIndex].Select(i => i * level).ToArray();
+        }
         public static readonly Func<EntityProfile, Entity> HumanConstructor = (profile) => {
-            Entity entity = new Entity(GlobalLookup.IDs.Next());
-            
+
             int occupationIndex;
-            if (profile.Occupation == EntityOccupation.RandomOccupation) {
-               occupationIndex = GlobalLookup.Rand.Next(0, statsMultByOccupation.Length-1);
+            if (profile.Occupation == EntityOccupation.None) {
+                occupationIndex = GameGlobal.Rand.Next(0, statsMultByOccupation.Length - 1);
             } else {
                 occupationIndex = (int)profile.Occupation;
             }
 
-            float[] statsMult = statsMultByOccupation[occupationIndex];
+            float[] computedStats = CalculateStatsByOccupationAndLevel(profile.Level, occupationIndex);
+            float[] computedSkills = CalculateSkillsByOccupationAndLevel(profile.Level, occupationIndex);
 
-            entity.Stats.Set(StatType.Agility, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Charisma, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Inteligence, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Luck, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Stamina, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Strength, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Wisdom, statsMult[0] * profile.Level);
-            entity.Stats.Set(StatType.Speed, statsMult[0] * profile.Level);
-            
-            // based on occupation generate some skills
+            IEntityInfo info = new EntityInfo(EntityRace.Human, (EntityOccupation)occupationIndex);
+            IEntityStats stats = new EntityStats(computedSkills, computedStats); // multiply these
 
             // based on occupation generate some inventory items
-
+            Entity entity = new Entity(GameGlobal.IDs.Next(), info, stats);
             return entity;
         };
 
         public static void Load() {
             if (!isLoaded) {
-                GlobalLookup.Factories.Entities.Add(EntityType.HumanPlayer, Human.HumanConstructor);
+                GameGlobal.Factories.Entities.Add(EntityRace.Human, Human.HumanConstructor);
                 isLoaded = true;
             }
         }

@@ -19,7 +19,7 @@ namespace GameEngine.Global {
         /// <summary>
         /// Factory to produce Entities
         /// </summary>
-        public Factory<EntityType, Entity, EntityProfile> Entities { get; private set; }
+        public Factory<EntityRace, Entity, EntityProfile> Entities { get; private set; }
 
         /// <summary>
         /// Factory to produce Maps
@@ -33,7 +33,7 @@ namespace GameEngine.Global {
 
         public FactoriesProvider() {
             this.Items = new Factory<ItemType, Item, ItemProfile>();
-            this.Entities = new Factory<EntityType, Entity, EntityProfile>();
+            this.Entities = new Factory<EntityRace, Entity, EntityProfile>();
             this.Maps = new Factory<MapType, Map, MapProfile>();
             this.Effects = new Factory<EffectType, Effect, EffectProfile>();
         }

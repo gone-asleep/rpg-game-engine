@@ -23,7 +23,7 @@ namespace GameEntities.Maps {
 
         public static void Load() {
             if (!isLoaded) {
-                GlobalLookup.Factories.Maps.Add(MapType.Test, TestMaps.TestMapConstructor);
+                GameGlobal.Factories.Maps.Add(MapType.Test, TestMaps.TestMapConstructor);
                 isLoaded = true;
             }
         }

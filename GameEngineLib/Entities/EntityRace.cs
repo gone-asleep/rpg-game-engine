@@ -5,12 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine.Entities {
-    public enum EntityType {
-        HumanPlayer, //special for now
+    public enum EntityRace {
         Human,
         Orc,
         Goblin,
-        Chest,
-        None
+        Dwarf,
+        Elf,
+        Gnome,
+        Halfling,
+        HalfElf,
+        HalfOrc,
+        Container,// special case
+        None // special case 
     }
 }

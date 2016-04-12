@@ -1,4 +1,5 @@
-﻿using GameEngine.Entities.Stats;
+﻿using GameEngine.Entities.Skills;
+using GameEngine.Entities.Stats;
 using GameEngine.Factories;
 using GameEngine.Global;
 using GameEngine.Items;
@@ -13,14 +14,14 @@ namespace GameEntities.Items {
         private static bool isLoaded = false;
 
         public static readonly Func<ItemProfile, Item> LongSwordConstructor = (profile) => {
-            Item item = new Item("Potion of Healing", ItemType.HealingPotion, ItemClassCode.Potion, ItemEquipType.LeftHand);
-            item.Modifier.Define(StatType.Strength, StatModifierType.Add, 4.0F);
+            IItemInfo info = new ItemInfo(ItemClassCode.Weapon, ItemType.LongSword, ItemEquipType.LeftHand, SkillType.TwoHanded, false, 3);
+            Item item = new Item(info, null);
             return item;
         };
 
         public static void Load() {
             if (!isLoaded) {
-                GlobalLookup.Factories.Items.Add(ItemType.LongSword, Weapons.LongSwordConstructor);
+                GameGlobal.Factories.Items.Add(ItemType.LongSword, Weapons.LongSwordConstructor);
                 isLoaded = true;
             }
         }

@@ -20,10 +20,10 @@ namespace GameEntities.Entities {
         };
 
         public static readonly Func<EntityProfile, Entity> HumanConstructor = (profile) => {
-            var h1 = GlobalLookup.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
-            var h2 = GlobalLookup.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
-            Item sword = GlobalLookup.Factories.Items.Generate(typeCode: ItemType.LongSword);
-            Entity player = GlobalLookup.Factories.Entities.Generate(typeCode: EntityType.Human);
+            var h1 = GameGlobal.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
+            var h2 = GameGlobal.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
+            Item sword = GameGlobal.Factories.Items.Generate(typeCode: ItemType.LongSword);
+            Entity player = GameGlobal.Factories.Entities.Generate(typeCode: EntityRace.Human);
             player.Receive(h1);
             player.Receive(h2); // these stack
             player.Receive(sword); // this does not
@@ -34,7 +34,7 @@ namespace GameEntities.Entities {
         public static void Load() {
             if (!isLoaded) {
                 // don't load this yet
-                GlobalLookup.Factories.Entities.Add(EntityType.Human, Human.HumanConstructor);
+                GameGlobal.Factories.Entities.Add(EntityRace.Human, Human.HumanConstructor);
                 isLoaded = true;
             }
         }

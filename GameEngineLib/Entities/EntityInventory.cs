@@ -15,10 +15,10 @@ namespace GameEngine {
         }
 
         public bool Add(Item item) {
-            if (item.ClassCode.HasFlag(ItemClassCode.Stackable)) {
-                var found = this.Inventory.FirstOrDefault(i => i.CanAdd(item));
+            if (item.Info.Stackable) {
+                var found = this.Inventory.FirstOrDefault(i => i.CanStack(item));
                 if (found != null) {
-                    found.Add(item);
+                    found.Stack(item);
                     return true;
                 }
             }

@@ -11,6 +11,7 @@ using GameEngine.Items;
 using GameEngine.Global;
 using System.Diagnostics;
 using GameEngine.Entities.Stats;
+using GameEngine.Entities;
 
 namespace GameEngine {
     public class Entity {
@@ -18,14 +19,6 @@ namespace GameEngine {
         /// The ID of this Entity
         /// </summary>
         public int ID { get; private set; }
-
-        /// <summary>
-        /// This is the name of the entity 
-        /// Note: not all entities have names, and it is not a
-        /// usefull piece of data for most entity opperations
-        /// this could move to another location as a look up
-        /// </summary>
-        public string Name { get; private set; }
 
         public Vector2 Position { get; set; }
 
@@ -35,7 +28,7 @@ namespace GameEngine {
 
         public float NextAvailableActionTime {
             get {
-                return (FinalActionTime > GlobalLookup.Time.Current) ? GlobalLookup.Time.Current : FinalActionTime;
+                return (FinalActionTime > GameGlobal.Time.Current) ? GameGlobal.Time.Current : FinalActionTime;
             }
             set {
                 this.FinalActionTime = value;
@@ -47,6 +40,10 @@ namespace GameEngine {
         /// </summary>
         public EntityStats Stats { get; private set; }
 
+        /// <summary>
+        /// Basic information about this entity
+        /// </summary>
+        public IEntityInfo Info { get; private set; }
 
         /// <summary>
         /// Equipment Applied to this entity
@@ -63,12 +60,13 @@ namespace GameEngine {
         /// </summary>
         private EntityInventory Inventory { get; set; }
 
-        public Entity(int id) {
+        public Entity(int id, IEntityInfo info, IEntityStats stats) {
             this.ID = id;
+            this.Info = info;
             this.Position = new Vector2(0, 0);
             this.FinalPosition = new Vector2(0, 0);
             this.Stats = new EntityStats();
-            this.Equiped = new Item[GlobalLookup.EquipTypeCount];
+            this.Equiped = new Item[GameGlobal.EquipTypeCount];
             this.Effects = new List<Effect>();
             this.Inventory = new EntityInventory(60);
         }
@@ -88,20 +86,19 @@ namespace GameEngine {
         public void Equip(Item item) {
             // check that the entity has the item in inventory 
             if (!this.Inventory.Contains(item)) {
-                Debug.WriteLine("Failed: Unequiped Item {0}, Not Present in inventory", item.Name);
+                Debug.WriteLine("Failed: Unequiped Item {0}, Not Present in inventory", item.Info.Name);
                 return;
             }
             // check that the item is currently equiped
-            if (this.Equiped[(int)item.EquipType] != null) {
-                Debug.WriteLine("Failed: Unequiped Item {0}, Item Currently Equiped to Slot", item.Name);
+            if (this.Equiped[(int)item.Info.EquipType] != null) {
+                Debug.WriteLine("Failed: Unequiped Item {0}, Item Currently Equiped to Slot", item.Info.Name);
                 return;
             }
 
-            this.Stats.AddModifier(item.Modifier);
-            if (item.EnchantmentModifier != null) {
-                Stats.AddModifier(item.EnchantmentModifier);
+            if (item.Modifier != null) {
+                item.Modifier.Apply(this.Stats);
             }
-            this.Equiped[(int)item.EquipType] = item;
+            this.Equiped[(int)item.Info.EquipType] = item;
         }
 
         /// <summary>
@@ -111,20 +108,20 @@ namespace GameEngine {
         public void Unequip(Item item) {
             // check that the entity has the item in inventory 
             if (!this.Inventory.Contains(item)) {
-                Debug.WriteLine("Failed: Unequiped Item {0}, Not Present in inventory", item.Name);
+                Debug.WriteLine("Failed: Unequiped Item {0}, Not Present in inventory", item.Info.Name);
                 return;
             }
             // check that the item is currently equiped
-            if (this.Equiped[(int)item.EquipType] != item) {
-                Debug.WriteLine("Failed: Unequiped Item {0}, Not Currently Equiped", item.Name);
+            if (this.Equiped[(int)item.Info.EquipType] != item) {
+                Debug.WriteLine("Failed: Unequiped Item {0}, Not Currently Equiped", item.Info.Name);
                 return;
             }
 
-            this.Stats.RemoveModifier(item.Modifier);
-            if (item.EnchantmentModifier != null) {
-                Stats.RemoveModifier(item.EnchantmentModifier);
+            item.Modifier.Unapply(this.Stats);
+            if (item.Modifier != null) {
+                item.Modifier.Apply(this.Stats);
             }
-            this.Equiped[(int)item.EquipType] = null;
+            this.Equiped[(int)item.Info.EquipType] = null;
         }
 
 
@@ -145,12 +142,12 @@ namespace GameEngine {
         /// <param name="immediate">Indicates if this is added to the action stack or is current</param>
         public void Give(Item item, Entity toEntity) {
             // check if the item is equiped, if so unequip
-            if (this.Equiped[(int)item.EquipType] == item) {
-                Debug.WriteLine("Failed: Give Item {0}, Item is currently equiped", item.Name);
+            if (this.Equiped[(int)item.Info.EquipType] == item) {
+                Debug.WriteLine("Failed: Give Item {0}, Item is currently equiped", item.Info.Name);
                 return;
             }
             if (!this.Inventory.Remove(item)) {
-                Debug.WriteLine("Failed: Give Item {0}, Not Present in inventory", item.Name);
+                Debug.WriteLine("Failed: Give Item {0}, Not Present in inventory", item.Info.Name);
                 return;
             }
 
@@ -164,17 +161,16 @@ namespace GameEngine {
         /// </summary>
         public void Refresh() {
             foreach (var effect in this.Effects) {
-                if (effect.EndTime <= GlobalLookup.Time.Current) {
-                    this.Stats.RemoveModifier(effect.Modifier);
+                if (effect.EndTime <= GameGlobal.Time.Current) {
+                    effect.Modifier.Unapply(this.Stats);
                     this.Effects.Remove(effect);
                 }
             }
-            this.Stats.Refresh();
         }
 
         public void AddEffect(Effect effect) {
             this.Effects.Add(effect);
-            this.Stats.AddModifier(effect.Modifier);
+            effect.Modifier.Unapply(this.Stats);
         }
 
 
@@ -186,11 +182,11 @@ namespace GameEngine {
         }
 
         public override string ToString() {
-            string debugStr = this.Name + "[" + this.Stats.ToString();
+            string debugStr = this.Info.Name + "[" + this.Stats.ToString();
 
             foreach (var item in this.Equiped) {
                 if (item != null) {
-                    debugStr += item.EquipType + ":" + item + ",  ";
+                    debugStr += item.Info.EquipType + ":" + item + ",  ";
                 }
             }
             

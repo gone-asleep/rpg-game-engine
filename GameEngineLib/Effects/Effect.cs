@@ -7,20 +7,15 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Effects {
     public class Effect {
-        public int Id { get; private set; }
-        public EffectType TypeCode { get; private set; }
-        public EffectClass ClassCode { get; private set; }
+        public IEffectInfo Info { get; private set; }
         public float EndTime { get; private set; }
         public float StartTime { get; private set; }
         public StatModifier Modifier { get; private set; }
-
-        public Effect(EffectType typeCode, EffectClass classCode, float startTime, float endTime) {
-            this.Id = GlobalLookup.IDs.Next();
-            this.TypeCode = typeCode;
-            this.ClassCode = classCode;
-            this.StartTime = startTime;
-            this.EndTime = endTime;
+        public float Duration { get; private set; }
+        public Effect(IEffectInfo info, IStatModifier modifier, float duration) {
+            this.Info = info;
             this.Modifier = new StatModifier();
+            this.Duration = duration;
         }
     }
 }

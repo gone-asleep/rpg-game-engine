@@ -47,4 +47,52 @@ Skill Point Bonuses
 --------------------------------------------------------------------------------------
 at certain amounts of skill points more options for player development may become available.. such as additional skills
 or % bonuses to resistences and other secondary base line stats (not available for increase by normal skill point usage)
+
+
+Factory Creation
+--------------------------------------------------------------------------------------
+Most things in the game will come from a set of factories. these factories will have all the 
+random creation behavior built into them 
+example:
+GoblinFactory..
+produces goblins at level one
+gives them a random inventory based on level and perhaps occupation (wizard,warrior,digger,etc)
  
+
+
+Enemy Creation
+--------------------------------------------------------------------------------------
+Enemy entities (hostile entities) will be generated based on the level of the current player(s) via some yet to be
+determined algorithm. Enemies should be generated and spaced such that in any given area/any grouping of enemies will
+not exceed the players ability to have a chance of winning a confrontation.
+
+this intruduces a concept of the level-density of an area
+so if a point is chosen on the map the level-density of that area can be determined by all entities within attacking 
+range of that area given some formula f() = sum(entity lvls)
+
+this can be addressed when creating and placing the entities.
+this could also be addressed after that fact by giving entities a tendency to attract/repel based on their combined stats.
+
+
+
+Game Objects and composition
+
+Entity
+--Inventory
+--Info
+----Occupation
+----Race
+--Stats
+----Skills
+----Computed Stats
+----Base Stats
+----Undistributed skill points
+----EntityStatModifier
+
+Item
+--ItemInfo
+--EntityStatModifier
+
+Effect
+--EffectInfo
+--EntityStatModifier

@@ -50,14 +50,18 @@
   <ItemGroup>
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Effects\EffectClass.cs" />
+    <Compile Include="Effects\EffectInfo.cs" />
     <Compile Include="Effects\EffectType.cs" />
     <Compile Include="Entities\Actions\ActionEquip.cs" />
     <Compile Include="Entities\Actions\ActionMove.cs" />
     <Compile Include="Entities\Actions\ActionUnequip.cs" />
-    <Compile Include="Entities\EntityType.cs" />
+    <Compile Include="Entities\EntityInfo.cs" />
+    <Compile Include="Entities\EntityOccupation.cs" />
+    <Compile Include="Entities\EntityRace.cs" />
     <Compile Include="Entities\Skills\SkillType.cs" />
     <Compile Include="Entities\Stats\StatModifierType.cs" />
     <Compile Include="Entities\Stats\StatType.cs" />
+    <Compile Include="Entities\Stats\StatValueModifier.cs" />
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\Profiles\EffectProfile.cs" />
     <Compile Include="Factories\Profiles\EntityProfile.cs" />
@@ -69,7 +73,7 @@
     <Compile Include="Entities\Stats\EntityStats.cs" />
     <Compile Include="Factories\Profiles\MapProfile.cs" />
     <Compile Include="Global\Providers\FactoriesProvider.cs" />
-    <Compile Include="Global\GlobalLookup.cs" />
+    <Compile Include="Global\GameGlobal.cs" />
     <Compile Include="Global\Providers\IDProvider.cs" />
     <Compile Include="Global\Providers\TimeProvider.cs" />
     <Compile Include="Global\Lookups\SkillStatInfo.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemClass.cs" />
     <Compile Include="Items\ItemEquipType.cs" />
+    <Compile Include="Items\ItemInfo.cs" />
     <Compile Include="Items\ItemType.cs" />
     <Compile Include="Math\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
