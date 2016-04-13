@@ -8,6 +8,12 @@ namespace GameEngine.Items {
     public enum ItemType {
         LongSword,
         ShortSword,
+        SpellBook,
+        Scroll,
+        Shield,
+        Helmet,
+        Robes,
+        Shirt,
         HealingPotion
     }
 }

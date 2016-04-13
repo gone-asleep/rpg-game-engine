@@ -20,6 +20,8 @@ namespace GameEngine.Items {
 
         bool Stackable { get; }
 
+        bool Equipable { get; }
+
         float BaseLineDamage { get; }
         /// <summary>
         /// the individuals name of this entity
@@ -42,12 +44,15 @@ namespace GameEngine.Items {
 
         public bool Stackable { get; private set; }
 
-        public ItemInfo(ItemClassCode classCode, ItemType type, ItemEquipType equipType, SkillType applyableSkill, bool stackable, float baselineDamage, string name = null) {
+        public bool Equipable { get; private set; }
+
+        public ItemInfo(ItemClassCode classCode, ItemType type, ItemEquipType equipType, SkillType applyableSkill, bool stackable, bool equipable, float baselineDamage, string name = null) {
             if (Name == null) {
                 this.Name = TypeCode.ToString() + " " + TypeCode.ToString();
             }
             this.Name = name;
             this.TypeCode = type;
+            this.Equipable = equipable;
             this.ClassCode = classCode;
             this.EquipType = equipType;
             this.BaseLineDamage = baselineDamage;

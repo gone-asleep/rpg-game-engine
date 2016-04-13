@@ -24,10 +24,10 @@ namespace GameEntities.Entities {
             var h2 = GameGlobal.Factories.Items.Generate(typeCode: ItemType.HealingPotion);
             Item sword = GameGlobal.Factories.Items.Generate(typeCode: ItemType.LongSword);
             Entity player = GameGlobal.Factories.Entities.Generate(typeCode: EntityRace.Human);
-            player.Receive(h1);
-            player.Receive(h2); // these stack
-            player.Receive(sword); // this does not
-            player.Equip(sword); // this fires on the first tick
+            player.Receive(-1, h1);
+            player.Receive(-1, h2); // these stack
+            player.Receive(5, sword); // this does not
+            player.Equip(5); // this fires on the first tick
             return player;
         };
 

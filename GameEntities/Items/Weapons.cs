@@ -14,8 +14,8 @@ namespace GameEntities.Items {
         private static bool isLoaded = false;
 
         public static readonly Func<ItemProfile, Item> LongSwordConstructor = (profile) => {
-            IItemInfo info = new ItemInfo(ItemClassCode.Weapon, ItemType.LongSword, ItemEquipType.LeftHand, SkillType.TwoHanded, false, 3);
-            Item item = new Item(info, null);
+            IItemInfo info = new ItemInfo(ItemClassCode.Weapon, ItemType.LongSword, ItemEquipType.LeftHand, SkillType.TwoHanded, false, true, 3);
+            Item item = new Item(GameGlobal.IDs.Next(), info, null);
             return item;
         };
 

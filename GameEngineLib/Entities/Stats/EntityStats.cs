@@ -70,7 +70,7 @@ namespace GameEngine {
         /// </summary>
         /// <param name="type">The stat to apply the skill points to</param>
         /// <param name="usedSkillPoints">A whole numbered count of skill points <= UseableSkillPoints</param>
-        void DistributePoints(StatType type, float usedSkillPoints = 0);
+        bool DistributePoints(StatType type, float usedSkillPoints = 0);
     }
 
     public class EntityStats : IEntityStats {
@@ -195,14 +195,18 @@ namespace GameEngine {
             this.skillStats[(int)skill] += addedSkillPoints;
         }
 
-        public void DistributePoints(StatType type, float usedSkillPoints = 0) {
+        public bool DistributePoints(StatType type, float usedSkillPoints = 0) {
+            bool success = false;
             if (this.UseableSkillPoints <= usedSkillPoints && usedSkillPoints > 0) {
                 this.requiresRefresh = true;
                 // reduce skill points
                 this.skillPoints -= usedSkillPoints;
                 // increase base line
                 this.baseLineStats[(int)type] += usedSkillPoints;
+
+                success = true;
             }
+            return success;
         }
 
         public void ApplyModifier(StatModifier stats) {

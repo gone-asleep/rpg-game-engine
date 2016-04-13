@@ -42,11 +42,11 @@ namespace GameEngine {
             }
         }
         
-        public void AddUnequipAction(Entity targetEntity, Item item, float time) {
+        public void AddUnequipAction(Entity targetEntity, int equipIndex, float time) {
             if (time == 0) {
                 time = targetEntity.NextAvailableActionTime;
             }
-            var action = new ActionUnequip(targetEntity, item, time);
+            var action = new ActionUnequip(targetEntity, equipIndex, time);
 
             this.Actions.Add(action.StartTime, action);
 
@@ -55,11 +55,11 @@ namespace GameEngine {
             }
         }
 
-        public void AddEquipAction(Entity targetEntity, Item item, float time) {
+        public void AddEquipAction(Entity targetEntity, int inventoryIndex, float time) {
             if (time == 0) {
                 time = targetEntity.NextAvailableActionTime;
             }
-            var action = new ActionUnequip(targetEntity, item, time);
+            var action = new ActionUnequip(targetEntity, inventoryIndex, time);
 
             this.Actions.Add(action.StartTime, action);
 

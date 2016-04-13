@@ -13,17 +13,18 @@ using System.Threading.Tasks;
 namespace GameEngine {
     class Program {
 
+
         static void Main(string[] args) {
-            GameEntities.Effects.EffectInformation.Load();
-            GameEntities.Entities.Human.Load();
-            GameEntities.Items.Weapons.Load();
-            GameEntities.Maps.TestMaps.Load();
-            GameEntities.Entities.Player.Load();
+            //GameEntities.Effects.EffectInformation.Load();
+            //GameEntities.Entities.Human.Load();
+            //GameEntities.Items.Weapons.Load();
+            //GameEntities.Maps.TestMaps.Load();
+            //GameEntities.Entities.Player.Load();
 
-            for (float i = 0.001f; i < 1.0; i+= 0.01f) {
+                for (float i = 0.001f; i < 1.0; i += 0.01f) {
 
-                Console.WriteLine(new string('*', (int)(10 * Extensions.NextGaussian(i, .5, 1))));
-            }
+                    Console.WriteLine(new string('*', (int)(10 * Extensions.NextGaussian(i, .5, 1))));
+                }
             Console.ReadKey();
         }
     }

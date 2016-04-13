@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace GameEngine.Global {
     public class IDProvider {
         private int nextID = 0;
-        public int Next() {
-            return nextID++;
+        public Guid Next() {
+            return Guid.NewGuid();
         }
     }
 }

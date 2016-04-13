@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Actions {
     public class ActionUnequip : ActionBase {
-        Item equipedItem;
+        int EquipedIndex;
 
-        public ActionUnequip(Entity entity, Item item, float nextAvailableTime) {
-            this.equipedItem = item;
+        public ActionUnequip(Entity entity, int equipedIndex, float nextAvailableTime) {
+            this.EquipedIndex = equipedIndex;
             this.StartTime = nextAvailableTime;
             this.EndTime = nextAvailableTime + 1;
             this.TargetEntity = entity;
@@ -21,7 +21,7 @@ namespace GameEngine.Actions {
         }
 
         protected override void Finish() {
-            this.TargetEntity.Unequip(equipedItem);
+            this.TargetEntity.Unequip(EquipedIndex);
         }
     }
 }

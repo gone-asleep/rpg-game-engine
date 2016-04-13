@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Actions {
     public class ActionEquip : ActionBase{
-        Item equipedItem;
+        int inventoryIndex;
 
-        public ActionEquip(Entity entity, Item item, float nextAvailableTime) {
-            this.equipedItem = item;
+        public ActionEquip(Entity entity, int inventoryIndex, float nextAvailableTime) {
+            this.inventoryIndex = inventoryIndex;
             this.StartTime = nextAvailableTime;
             this.EndTime = nextAvailableTime + 1;
             this.TargetEntity = entity;
@@ -22,7 +22,7 @@ namespace GameEngine.Actions {
         }
 
         protected override void Finish() {
-            this.TargetEntity.Equip(equipedItem);
+            this.TargetEntity.Equip(inventoryIndex);
         }
     }
 }
