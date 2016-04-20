@@ -3,6 +3,8 @@
 
 base parts of the system
 
+
+
 Entities 
 --------------------------------------------------------------------------------------
 Entities include all playable and non-playable characters in the game. entities can also 
@@ -12,10 +14,20 @@ character with an inventory.
 Entities are comprised of
 Inventory Items
 Skills
+Abilities - A list of permissions on use of skills, actions
 Stats
 Effects
 Type information such as race, gender.. visual aspects
 
+Actions
+--------------------------------------------------------------------------------------
+Actions can only be performed by entities on entities with the only exception being the world
+which may be treated as a special entity or entities. It could abuse the inventory to create
+a playing map
+
+World
+--------------------------------------------------------------------------------------
+The World Contains all entities
 
 
 Skills

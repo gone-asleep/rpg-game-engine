@@ -1,5 +1,6 @@
 ﻿using GameEngine.Entities.Stats;
 using GameEngine.Global;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine {
+    [ProtoContract]
+    [ProtoInclude(1, typeof(StatModifier))]
     public interface IStatModifier {
         /// <summary>
         /// Indicates if this stat modification is currently being applied to the 'Calculated' EntityStat Collection
@@ -43,9 +46,13 @@ namespace GameEngine {
         StatValueModifier this[int i] { get; }
     }
 
+    [ProtoContract]
     public class StatModifier : IStatModifier {
-        private StatValueModifier[] Stats { get; set; }
 
+        [ProtoMember(1)]
+        private StatValueModifier[] Stats { get; set; }
+        
+        [ProtoMember(2)]
         public bool Applied { get; private set; }
 
         public void Apply(IEntityStats appliedStatContainer) {

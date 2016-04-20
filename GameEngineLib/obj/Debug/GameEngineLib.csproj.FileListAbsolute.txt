@@ -9,6 +9,8 @@ D:\Projects\GameEngine\GameEngineLib\bin\Debug\OpenTK.xml
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\GameEngineLib.dll.config
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\GameEngineLib.dll
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\GameEngineLib.pdb
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\protobuf-net.dll
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\protobuf-net.pdb
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\protobuf-net.xml
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.dll
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.pdb
-D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.csprojResolveAssemblyReference.cache

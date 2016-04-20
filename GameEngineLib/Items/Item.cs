@@ -1,5 +1,6 @@
 ﻿using GameEngine.Global;
 using GameEngine.Items;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace GameEngine.Items {
     /// <summary>
     /// Game Items
     /// </summary>
+    [ProtoContract]
+    [ProtoInclude(1, typeof(Item))]
     public interface IItem {
         /// <summary>
         /// Unique Identity for this item
         /// </summary>
-        Guid Id { get; }
+        Guid ID { get; }
 
         /// <summary>
         /// The Quality of the item will determine 
@@ -26,7 +29,7 @@ namespace GameEngine.Items {
         /// If the item is Stackable then Count can be > 1
         /// Else it is 1
         /// </summary>
-        int Count { get;  }
+        int Count { get; set; }
 
         /// <summary>
         /// Common info for this item type
@@ -38,45 +41,41 @@ namespace GameEngine.Items {
         /// </summary>
         IStatModifier Modifier { get; }
 
-        /// <summary>
-        /// Checks to see if an item can be grouped together with another
-        /// </summary>
-        /// <param name="item">Item to the grouped into this item</param>
-        /// <returns>Value indicating Ability to stack</returns>
-        bool CanStack(IItem item);
-        void Stack(IItem item);
+
+        bool Same(IItem item);
     }
 
     // count is not sufficient enough for security
     // this needs to be a list of guids
+    [ProtoContract]
     public class Item : IItem {
-
-        public Guid Id { get; private set; }
-
+        
+        [ProtoMember(2)]
+        public Guid ID { get; private set; }
+        
+        [ProtoMember(3)]
         public float Quality { get; private set; }
-
-        public int Count { get; private set; }
-
+        
+        [ProtoMember(4)]
+        public int Count { get; set; }
+        
+        [ProtoMember(5)]
         public IItemInfo Info { get; private set; }
-
+        
+        [ProtoMember(6)]
         public IStatModifier Modifier { get; private set; }
 
-        public bool CanStack(IItem item) {
-            return (item.Info.Stackable && item.Id != this.Id && item.Info == this.Info);
+        public bool Same(IItem item) {
+            return item.ID != this.ID && this.Info == this.Info; 
         }
 
+        public Item() {
 
-
-        public void Stack(IItem item) {
-            if (this.CanStack(item)) {
-                this.Count++;
-                ((Item)item).Count--;
-            }
         }
 
-        public Item(Guid id, IItemInfo info, IStatModifier modifier) {
-            this.Id = id;
-            this.Count = 1;
+        public Item(Guid id, IItemInfo info, IStatModifier modifier, int count) {
+            this.ID = id;
+            this.Count = count;
             this.Info = info;
             this.Modifier = modifier;
         }

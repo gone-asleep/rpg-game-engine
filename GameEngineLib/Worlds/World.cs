@@ -1,5 +1,4 @@
-﻿using GameEngine.Actions;
-using GameEngine.Items;
+﻿using GameEngine.Items;
 using GameEngine.Worlds;
 using System;
 using System.Collections;
@@ -10,93 +9,47 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameEngine {
-    public class World {
+    public interface IWorld {
+        Dictionary<Guid, IEntity> Entities { get; }
+        Dictionary<Guid, IItem> Items { get; }
+        Map Map { get; }
 
-        public List<Entity> Entities { get; set; }
+        void RegisterEntity(IEntity entity);
+        void RegisterItem(IItem item);
+    }
 
-        public List<Item> Items { get; set; }
-        
-        public SortedList Actions { get; set; }
+    public class World : IWorld {
+        public Dictionary<Guid, IEntity> Entities { get; private set; }
+        public Dictionary<Guid, IItem> Items { get; private set; }
         
         public Map Map { get; private set; }
         
         public World() {
-            this.Entities = new List<Entity>();
-            this.Items = new List<Item>();
-            this.Actions = new SortedList();
+            this.Items = new Dictionary<Guid, IItem>();
+            this.Entities = new Dictionary<Guid, IEntity>();
         }
 
-
-
-        public void AddMoveAction(Entity targetEntity, Vector2 toPosition, float time) {
-            if (time == 0) {
-                time = targetEntity.NextAvailableActionTime;
-            } 
-
-            var action = new ActionMove(targetEntity, toPosition, time);
-            
-            targetEntity.FinalPosition = toPosition;
-
-            if (action.EndTime > targetEntity.NextAvailableActionTime) {
-                targetEntity.NextAvailableActionTime = action.EndTime;
-            }
+        public void RegisterEntity(IEntity entity) {
+            this.Entities.Add(entity.ID, entity);
         }
-        
-        public void AddUnequipAction(Entity targetEntity, int equipIndex, float time) {
-            if (time == 0) {
-                time = targetEntity.NextAvailableActionTime;
-            }
-            var action = new ActionUnequip(targetEntity, equipIndex, time);
-
-            this.Actions.Add(action.StartTime, action);
-
-            if (action.EndTime > targetEntity.NextAvailableActionTime) {
-                targetEntity.NextAvailableActionTime = action.EndTime;
-            }
+        public void UnregisterEntity(Guid id) {
+            this.Entities.Remove(id);
         }
 
-        public void AddEquipAction(Entity targetEntity, int inventoryIndex, float time) {
-            if (time == 0) {
-                time = targetEntity.NextAvailableActionTime;
-            }
-            var action = new ActionUnequip(targetEntity, inventoryIndex, time);
+        public void RegisterItem(IItem item) {
+            this.Items.Add(item.ID, item);
+        }
 
-            this.Actions.Add(action.StartTime, action);
-
-            if (action.EndTime > targetEntity.NextAvailableActionTime) {
-                targetEntity.NextAvailableActionTime = action.EndTime;
+        public IItem GetItem(Guid guid) {
+            IItem item;
+            if (Items.TryGetValue(guid, out item)) {
+                Items.Remove(guid);
             }
-            
+            return item;
         }
 
         public void SetMap(Map map) {
             this.Map = map;
-        }
-
-        public void Refresh(float currentTime) {
-            foreach (var entity in Entities) {
-                entity.Refresh();
-            }
-            foreach (var action in this.Actions) {
-                var c_action = (ActionBase)action;
-                if (c_action.IsFinished) {
-                    continue;
-                } else if (c_action.EndTime < currentTime) {
-                    c_action.FinishAction(currentTime);
-                    continue;
-                } else if (c_action.StartTime > currentTime) {
-                    break;
-                } else {
-                    c_action.UpdateAction(currentTime);
-                } 
-            }
-        }
-
-        public void Draw() {
-            this.Map.Draw();
-            foreach (var entity in Entities) {
-                entity.Draw();
-            }
         }
     }
 }

@@ -13,15 +13,6 @@ namespace GameEngine.Global.Providers {
         /// </summary>
         public float Current { get; set; }
 
-        public bool CheckOccured(ActionBase action) {
-            return action.EndTime <= Current;
-        }
-
-        public bool CheckCurrent(ActionBase action) {
-            return Current >= action.StartTime && Current < action.EndTime;
-        }
-
-
         public TimeProvider() {
             this.Current = 0;
         }
