@@ -19,6 +19,7 @@ namespace GameEngine.Entities {
         /// </summary>
         EntityOccupation Occupation { get;  }
 
+
         /// <summary>
         /// the individuals name of this entity
         /// </summary>
@@ -33,20 +34,39 @@ namespace GameEngine.Entities {
         
         [ProtoMember(2)]
         public EntityOccupation Occupation { get; private set; }
-        
+
         [ProtoMember(3)]
+        public string FirstName { get; private set; }
+        
+        [ProtoMember(4)]
+        public string LastName { get; private set; }
+
+        [ProtoMember(5)]
         public string Name { get; private set; }
 
         public EntityInfo() {
         }
 
-        public EntityInfo(EntityRace race, EntityOccupation occupation, string name = null) {
-            if (Name == null) {
-                this.Name = Race.ToString() + " " + Occupation.ToString();
-            }
-            this.Name = name;
+        public EntityInfo(EntityRace race, EntityOccupation occupation, string firstName, string lastName=null) {
+            this.FirstName = firstName;
+            this.LastName = lastName;
             this.Race = race;
             this.Occupation = occupation;
+
+            // this generates the full name of the entity as it will be referenced in most places within the game
+            if (!string.IsNullOrEmpty(LastName)) {
+                if (Occupation != EntityOccupation.None) {
+                    Name = FirstName + " " + LastName + " the " + Occupation.ToString();
+                } else {
+                    Name = FirstName + " " + LastName;
+                }
+            } else {
+                if (Occupation != EntityOccupation.None) {
+                    Name = FirstName + " the " + Occupation.ToString();
+                } else {
+                    Name = FirstName;
+                }
+            }
         }
     }
 }

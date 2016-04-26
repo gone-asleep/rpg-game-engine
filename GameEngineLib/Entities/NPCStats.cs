@@ -1,45 +1,15 @@
-﻿using GameEngine.Entities;
-using GameEngine.Entities.Skills;
-using GameEngine.Entities.Stats;
+﻿using GameEngine.Entities.Stats;
 using GameEngine.Global;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine {
+namespace GameEngine.Entities {
     [ProtoContract]
-    [ProtoInclude(100, typeof(EntityStats))]
-    [ProtoInclude(200, typeof(NPCStats))]
-    public interface IEntityStats {
-
-        /// <summary>
-        /// Use this function to force a refresh of the stats when next accessed
-        /// </summary>
-        void MarkAsDirty();
-
-        /// <summary>
-        /// Adds a Modifier to the EntityStats collection
-        /// </summary>
-        /// <param name="stats">The Modifier to be applied</param>
-        void ApplyModifier(StatModifier stats);
-
-        /// <summary>
-        /// Gets the current computed stat level
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns>Computed Stat Level</returns>
-        float Get(StatType i);
-
-
-        void Add(StatType i, float value);
-    }
-
-    [ProtoContract]
-    public class EntityStats : IEntityStats {
+    public class NPCStats : IEntityStats {
         /// <summary>
         /// A list of Stat Modifiers currently applied to the entity
         /// </summary>
@@ -47,11 +17,17 @@ namespace GameEngine {
         private List<StatModifier> modifiers;
 
         /// <summary>
-        /// The base stats for the entity
-        /// base stats are the initial granted stats + any distributed skill points
+        /// This is the distribution of stat points
+        /// the sum of this should be
         /// </summary>
         [ProtoMember(2)]
-        private float[] baseLineStats;
+        public float[] baseStatsDistribution;
+
+        /// <summary>
+        /// The number of stat points to distribute over baseStatsDistribution
+        /// </summary>
+        [ProtoMember(3)]
+        public int distributedStatPoints;
 
         /// <summary>
         /// The computed stats for the entity.
@@ -59,30 +35,24 @@ namespace GameEngine {
         /// </summary>
         private float[] computedStats;
 
-
         /// <summary>
         /// Indicates that the computed stats will be recalculated on the next stat read
         /// </summary>
         private bool requiresRefresh;
 
-        public EntityStats() {
+
+
+        public NPCStats() {
 
         }
 
-        /// <summary>
-        /// Entity Stats Constructor
-        /// </summary>
-        /// <param name="skillTable">A complete table of skill levels placed in the order in which they appear in the SkillType enum</param>
-        /// <param name="statTable">A complete table of stat levels placed in the order in which they appear in the StatType enum</param>
-        public EntityStats(float[] statTable = null) {
-            this.requiresRefresh = false;
-            this.modifiers = new List<StatModifier>();
+        public NPCStats(int pointsToDistribute, float[] baseStatsDistribution) {
+            this.baseStatsDistribution = new float[GameGlobal.StatTypeCount];
             this.computedStats = new float[GameGlobal.StatTypeCount];
-            this.baseLineStats = new float[GameGlobal.StatTypeCount];
-            if (statTable != null) {
-                Array.Copy(statTable, this.baseLineStats, this.baseLineStats.Length);
-                this.requiresRefresh = true;
-            }
+            Array.Copy(baseStatsDistribution, this.baseStatsDistribution, this.baseStatsDistribution.Length);
+            this.requiresRefresh = true;
+            this.distributedStatPoints = pointsToDistribute;
+            this.modifiers = new List<StatModifier>();
         }
 
         /// <summary>
@@ -94,7 +64,11 @@ namespace GameEngine {
         /// so that all modifications are done before a read
         /// </summary>
         private void Refresh() {
-            Array.Copy(baseLineStats, computedStats, baseLineStats.Length);
+            // this part is different that the entityStats class. base values are calculated from a distribution 
+            // instead of explicit value
+            for (int j = 0; j < computedStats.Length; j++) {
+                computedStats[j] = (float)Math.Floor(this.baseStatsDistribution[j] * this.distributedStatPoints);
+            }
             for (int i = 0; i < modifiers.Count; i++) { // columns
                 if (modifiers[i].Applied == false) {
                     modifiers.RemoveAt(i); // remove the unapplied modifier
@@ -122,29 +96,20 @@ namespace GameEngine {
             this.requiresRefresh = true;
         }
 
-        public float Get(StatType i) {
+        public void ApplyModifier(StatModifier stats) {
+            this.requiresRefresh = true;
+            this.modifiers.Add(stats);
+        }
+
+        public float Get(Stats.StatType i) {
             if (requiresRefresh) {
                 this.Refresh();
             }
             return computedStats[(int)i];
         }
 
-        public void Add(StatType i, float value) {
-            computedStats[(int)i] += value;
-            this.requiresRefresh = true;
-        }
-
-        public void ApplyModifier(StatModifier stats) {
-            this.requiresRefresh = true;
-            this.modifiers.Add(stats);
-        }
-
-        public override string ToString() {
-            string debugStr = "\"Stats\":{";
-            foreach (var value in Enum.GetValues(typeof(StatType))) {
-                debugStr += "\"" + Enum.GetName(typeof(StatType), value) + "\":" + this.Get((StatType)value) +",";
-            }
-            return debugStr + "}";
+        public void Add(Stats.StatType i, float value) {
+            throw new NotImplementedException();
         }
 
         [ProtoAfterDeserialization]

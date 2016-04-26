@@ -40,6 +40,7 @@ namespace GameEngine.Items {
         Helmet,
         Robes,
         Shirt,
-        HealingPotion
+        HealingPotion,
+        LongStaff
     }
 }

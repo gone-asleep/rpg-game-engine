@@ -23,7 +23,7 @@ namespace GameEngine.Items {
         /// The Quality of the item will determine 
         /// Worth, and Performance
         /// </summary>
-        float Quality { get; }
+        ItemQualityCode Quality { get; }
 
         /// <summary>
         /// If the item is Stackable then Count can be > 1
@@ -54,7 +54,7 @@ namespace GameEngine.Items {
         public Guid ID { get; private set; }
         
         [ProtoMember(3)]
-        public float Quality { get; private set; }
+        public ItemQualityCode Quality { get; private set; }
         
         [ProtoMember(4)]
         public int Count { get; set; }
@@ -73,15 +73,16 @@ namespace GameEngine.Items {
 
         }
 
-        public Item(Guid id, IItemInfo info, IStatModifier modifier, int count) {
+        public Item(Guid id, IItemInfo info, IStatModifier modifier, ItemQualityCode quality, int count) {
             this.ID = id;
             this.Count = count;
             this.Info = info;
             this.Modifier = modifier;
+            this.Quality = quality;
         }
 
         public override string ToString() {
-            return (this.Info.Name??this.Info.TypeCode.ToString()) + "{" + this.Modifier.ToString() + "}";
+            return (this.Info.Name ?? this.Info.TypeCode.ToString()) + " Quality:" + this.Quality.ToString();
         }
     }
 }

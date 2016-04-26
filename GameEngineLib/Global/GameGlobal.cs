@@ -157,10 +157,22 @@ namespace GameEngine.Global {
 
         public static IGlobal GlobalInfo;
 
+        private static Random rnd;
+
+        public static float RandomFloat(float min, float max) {
+            return ((float)rnd.NextDouble()) * (max - min) + min;
+        }
+
+        public static int RandomInt(int min, int max) {
+            return rnd.Next(min, max);
+        }
+
         /// <summary>
         /// Global Constructor
         /// </summary>
         static GameGlobal() {
+            rnd = new Random();
+
             Factories = new FactoriesProvider();
 
             // initialize the skill state info

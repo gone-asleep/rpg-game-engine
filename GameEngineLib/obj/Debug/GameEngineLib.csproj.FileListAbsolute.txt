@@ -14,3 +14,4 @@ D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\protobuf-net
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\bin\Debug\protobuf-net.xml
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.dll
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.pdb
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngineLib\obj\Debug\GameEngineLib.csprojResolveAssemblyReference.cache

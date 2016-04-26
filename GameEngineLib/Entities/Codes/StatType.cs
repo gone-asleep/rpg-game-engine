@@ -13,6 +13,6 @@ namespace GameEngine.Entities.Stats {
         Charisma = 4,
         Agility = 5,
         Luck = 6,
-        Speed = 7
+        Dexterity = 7
     }
 }

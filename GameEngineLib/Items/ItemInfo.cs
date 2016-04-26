@@ -15,6 +15,7 @@ namespace GameEngine.Items {
         SkillType ApplyableSkill { get; }
     }
 
+
     [ProtoContract]
     [ProtoInclude(1, typeof(ItemInfo))]
     public interface IItemInfo {
@@ -76,6 +77,7 @@ namespace GameEngine.Items {
             return false;
         }
     }
+
 
     [ProtoContract]
     public class WeaponInfo : ItemInfo, IWeaponInfo {

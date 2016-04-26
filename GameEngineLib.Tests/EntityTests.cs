@@ -12,13 +12,16 @@ namespace GameEngineLib.Tests {
     [TestClass]
     public class EntityTests {
         float[] statValues = new float[] { /*strength*/1.0f, /*Stamina*/2.0f, /*Wisdom*/3.0f, /*Inteligence*/4.0f, /*Charisma*/5.0f, /*Agility*/6.0f, /*Luck*/7.0f, /*Speed*/8.0f };
-        private float[] skillValues = new float[] { 
-            /*LightArmor*/1.0f, /*HeavyArmor*/2.0f, /*LightBlade*/3.0f, 
-            /*HeavyBlade*/4.0f, /*BluntWeapon*/5.0f, /*Sneak*/6.0f, 
-            /*Pickpocket*/7.0f, /*LockPicking*/8.0f, /*RangeWeapon*/9.0f,
-            /*PolearmWeapon*/7.0f, /*AxeWeapon*/8.0f, /*FlailWeapon*/9.0f,
-            /*StaffWeapon*/7.0f, /*HammerWeapon*/8.0f
-        };
+        private float[] skillValues;
+
+
+        [TestInitialize]
+        public void Setup() {
+            skillValues = new float[GameGlobal.SkillTypeCount];
+            for (int i = 0; i < skillValues.Length; i++) {
+                skillValues[i] = (float)i;
+            }
+        }
 
         private IGlobal GetDummyGlobal() {
             INetworkAdapter networkAdapter = new LoopbackNetworkAdapter();
@@ -27,7 +30,7 @@ namespace GameEngineLib.Tests {
         }
 
         private IEntity GetDummyEntity() {
-            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian);
+            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, "Grok");
             IEntityStats stats = new EntityStats(statValues);
             IEntitySkills skills = new EntitySkills(skillValues);
             IInventory inventory = new Inventory(60);
@@ -40,14 +43,14 @@ namespace GameEngineLib.Tests {
         private IItem GetDummyWeapon() {
             IWeaponInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3, "Long Sword");
             Guid id = Guid.NewGuid();
-            Item item = new Item(id, info, null, 1);
+            Item item = new Item(id, info, null, ItemQualityCode.Superior, 1);
             return item;
         }
 
         [TestMethod]
         public void EntityCreate() {
             try {
-                IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian);
+                IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, "Grok");
                 IEntityStats stats = new EntityStats(statValues);
                 IEntitySkills skills = new EntitySkills(skillValues);
                 IInventory inventory = new Inventory(60);

@@ -19,7 +19,7 @@ namespace GameEngineLib.Tests {
         public void InventoryAddItem() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
 
             bool setSuccessfull = inventory.Set(testItem, 0);
             Assert.IsTrue(setSuccessfull);
@@ -29,7 +29,7 @@ namespace GameEngineLib.Tests {
         public void InventoryGetItem() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             inventory.Set(testItem, 0);
 
             IItem getItem = inventory.Get(0);
@@ -40,7 +40,7 @@ namespace GameEngineLib.Tests {
         public void InventoryEquipItem() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
                 
             IEntityStats stats = new EntityStats();
@@ -59,7 +59,7 @@ namespace GameEngineLib.Tests {
         public void InventoryUnequipItem() {
             IInventory inventory = new Inventory(60);
             IWeaponInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IEntityStats stats = new EntityStats();
             IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
             
@@ -84,7 +84,7 @@ namespace GameEngineLib.Tests {
         public void InventoryDestoyItem() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             
             inventory.Set(testItem, 0);
             Assert.AreEqual(inventory.Remaining, 59);
@@ -101,8 +101,8 @@ namespace GameEngineLib.Tests {
         public void InventoryDestoyQuantityOfItem() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
-            IItem testItem2 = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
+            IItem testItem2 = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             
             inventory.Set(testItem, 0);
             inventory.Set(testItem2, 0);
@@ -121,9 +121,9 @@ namespace GameEngineLib.Tests {
         public void InventoryAddStackable() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
-            IItem testItem = new Item(Guid.NewGuid(), info, null, 1);
-            IItem testItem2 = new Item(Guid.NewGuid(), info, null, 1);
-            IItem testItem3 = new Item(Guid.NewGuid(), info, null, 1);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
+            IItem testItem2 = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
+            IItem testItem3 = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             
             inventory.Set(testItem, 0);
             inventory.Set(testItem2, 0);
