@@ -112,6 +112,10 @@ namespace GameEngine.Global {
 
     public static class GameGlobal {
 
+        public static readonly int WorldDayZero = 500 * 365;
+
+        public static int WorldDayCurrent = 0 + WorldDayZero;
+
         /// <summary>
         /// The Total Number of Stat Types
         /// </summary>
@@ -131,6 +135,13 @@ namespace GameEngine.Global {
         /// The Total Number of ways an item can be equiped to a player
         /// </summary>
         public static readonly int EquipTypeCount = Enum.GetNames(typeof(ItemEquipType)).Count();
+
+        public static readonly int OccupationTypeCount = Enum.GetNames(typeof(EntityOccupation)).Count();
+
+        public static readonly int RaceTypeCount = Enum.GetNames(typeof(EntityRace)).Count();
+
+        public static readonly int MinRaceCode = 1 << 2;
+        public static readonly int MaxRaceCode = 18 << 2;
 
         /// <summary>
         /// Factories Used for generating all Game Items/Entities/Effects
@@ -164,9 +175,22 @@ namespace GameEngine.Global {
         }
 
         public static int RandomInt(int min, int max) {
-            return rnd.Next(min, max);
+            return rnd.Next(min, max+1);
         }
 
+
+        private static int a = 1212;
+        private static int c = 2000;
+        private static int lastX = 1;
+        public static int NextRandomInt(int max) {
+            lastX = (a * lastX + c) % max;
+            return lastX;
+        }
+        public static void SeedRandomInt(int _a, int _c, int start) {
+            a = _a;
+            c = _c;
+            lastX = start;
+        }
         /// <summary>
         /// Global Constructor
         /// </summary>

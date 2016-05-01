@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GameEntities</RootNamespace>
     <AssemblyName>GameEntities</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,9 +46,8 @@
   <ItemGroup>
     <Compile Include="CodeProbability.cs" />
     <Compile Include="Effects\EffectInformation.cs" />
-    <Compile Include="Entities\Human.cs" />
-    <Compile Include="Entities\Player.cs" />
-    <Compile Include="Items\Weapons.cs" />
+    <Compile Include="Entities\NPCFactory.cs" />
+    <Compile Include="Items\ItemsFactory.cs" />
     <Compile Include="Maps\MapConstructors.cs" />
     <Compile Include="NameProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +56,10 @@
     <ProjectReference Include="..\GameEngineLib\GameEngineLib.csproj">
       <Project>{929de6e0-e649-48d4-88a2-8f40d9c8d4d3}</Project>
       <Name>GameEngineLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Weighted-Item-Randomizer-for-C-Sharp\Weighted Randomizer\Weighted Randomizer.csproj">
+      <Project>{1245bc96-2f42-404c-9f11-65a4326299d6}</Project>
+      <Name>Weighted Randomizer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

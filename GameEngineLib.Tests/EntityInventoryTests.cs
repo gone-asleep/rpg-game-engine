@@ -6,6 +6,7 @@ using GameEngine.Entities.Skills;
 using GameEngine.Entities;
 using GameEngine.Effects;
 using GameEngine.AI;
+using GameEngine.Items.Info;
 
 namespace GameEngineLib.Tests {
     [TestClass]
@@ -18,7 +19,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryAddItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
 
             bool setSuccessfull = inventory.Set(testItem, 0);
@@ -28,7 +29,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryGetItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             inventory.Set(testItem, 0);
 
@@ -39,7 +40,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryEquipItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
                 
@@ -58,7 +59,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryUnequipItem() {
             IInventory inventory = new Inventory(60);
-            IWeaponInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IEntityStats stats = new EntityStats();
             IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
@@ -70,7 +71,7 @@ namespace GameEngineLib.Tests {
             Assert.IsTrue(equipSuccess);
             Assert.AreEqual(inventory.Remaining, 60);
 
-            bool unequipSuccess = inventory.SetUnequiped((int)((IWeaponInfo)testItem.Info).EquipType, stats);
+            bool unequipSuccess = inventory.SetUnequiped((int)((IItemWeaponInfo)testItem.Info).EquipType, stats);
             Assert.IsTrue(unequipSuccess);
             Assert.AreEqual(inventory.Remaining, 59);
 
@@ -83,7 +84,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryDestoyItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
+            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             
             inventory.Set(testItem, 0);
@@ -100,7 +101,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryDestoyQuantityOfItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
+            IItemInfo info = new ItemConsumableInfo(ItemClassCode.Potion, ItemType.HealingPotion);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IItem testItem2 = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             
@@ -120,7 +121,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryAddStackable() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
+            IItemInfo info = new ItemConsumableInfo(ItemClassCode.Potion, ItemType.HealingPotion);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IItem testItem2 = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IItem testItem3 = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
@@ -131,7 +132,7 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(inventory.Remaining, 59);
             IItem getItem = inventory.Get(0);
             Assert.IsNotNull(getItem);
-            Assert.AreEqual(getItem.Count, 3);
+            Assert.AreEqual(3, getItem.Count);
             Assert.AreEqual(inventory.Remaining, 60);
             
         }

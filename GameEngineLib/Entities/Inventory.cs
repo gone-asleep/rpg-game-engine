@@ -1,6 +1,7 @@
 ﻿using GameEngine.Entities;
 using GameEngine.Global;
 using GameEngine.Items;
+using GameEngine.Items.Info;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
@@ -164,7 +165,7 @@ namespace GameEngine {
                 
                     if (existingItem != null) {
                        
-                        if (item.Info.Stackable && item.Same(existingItem)) {
+                        if ((item.Info is IItemConsumableInfo) && item.Same(existingItem)) {
                             existingItem.Count++;
                             item.Count--;
                             success = true;
@@ -179,11 +180,11 @@ namespace GameEngine {
                     for (int i = 0; i < innerList.Length; i++) {
                         if (innerList[i] == null && inventoryIndex == -1) {
                             inventoryIndex = i;
-                            if (!item.Info.Stackable) {
+                            if (!(item.Info is IItemConsumableInfo)) {
                                 success = true;
                                 break;
                             }
-                        } else if (innerList[i] != null && item.Info.Stackable && innerList[i].Same(item) ) {
+                        } else if (innerList[i] != null && item.Info is IItemConsumableInfo && innerList[i].Same(item)) {
                             inventoryIndex = i;
                             success = true;
                             break;
@@ -246,6 +247,33 @@ namespace GameEngine {
             if (this.innerList == null)
                 this.innerList = new IItem[this.Size];
 
+        }
+
+        public override string ToString() {
+            string rtn = "{\"Equiped\":{";
+            bool first = true;
+            for (int i = 0; i < equiped.Length; i++ ) {
+                if (equiped[i] != null) {
+                    if (!first) {
+                        rtn += ",";
+                    }
+                    rtn += "\"" + ((ItemEquipType)i).ToString() + "\":" + equiped[i].ToString();
+                    first = false;
+                }
+            }
+            first = true;
+            rtn += "},\"Inventory\":{";
+            for (int i = 0; i < this.innerList.Length; i++) {
+                if (this.innerList[i] != null) {
+                    if (!first) {
+                        rtn += ",";
+                    }
+                    rtn += "\"" + i + "\":" + this.innerList[i].ToString();
+                    first = false;
+                }
+            }
+            rtn += "}}";
+            return rtn;
         }
     }
 }

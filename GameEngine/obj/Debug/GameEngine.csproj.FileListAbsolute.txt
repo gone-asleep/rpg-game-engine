@@ -21,3 +21,5 @@ D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\protobuf-net.xm
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\obj\Debug\GameEngine.csprojResolveAssemblyReference.cache
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\obj\Debug\GameEngine.exe
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\obj\Debug\GameEngine.pdb
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\Weighted Randomizer.dll
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\Weighted Randomizer.pdb

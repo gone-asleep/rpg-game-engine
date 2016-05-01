@@ -13,20 +13,20 @@ namespace GameEngine.Entities {
     /// source for alot of the roles
     /// http://juliahwest.com/prompts/fantasy_job_list.html
     /// </summary>
-    public enum EntityOccupation {
-        None,// special case describes entities that do not have a distinct game given occupation
-        Warrior,
-        Theif,
-        Bard,
-        Barbarian,
+    public enum EntityOccupation : int{
+        None = 0,// special case describes entities that do not have a distinct game given occupation
+        Warrior = 1,
+        Theif = 2,
+        Bard = 3,
+        Barbarian = 4,
         /// <summary>
         /// a member of a religious community of men typically living under vows of poverty, chastity, and obedience.
         /// </summary>
-        Monk,
-        Paladin,
-        Ranger,
-        Sorcerer,
-        Warlock,
+        Monk = 5,
+        Paladin = 6,
+        Ranger = 7,
+        Sorcerer = 8,
+        Warlock = 9,
         // less playable types , but would be usefull for defining entities with certain behaviors/inventories
         Drunk,
         Fisherman,

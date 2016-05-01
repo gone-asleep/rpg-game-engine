@@ -7,6 +7,7 @@ using GameEngine.Effects;
 using GameEngine.AI;
 using GameEngine.Entities.Skills;
 using GameEngine.Global;
+using GameEngine.Items.Info;
 
 namespace GameEngineLib.Tests {
     [TestClass]
@@ -30,7 +31,7 @@ namespace GameEngineLib.Tests {
         }
 
         private IEntity GetDummyEntity() {
-            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, "Grok");
+            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, 365 * 25, "Grok");
             IEntityStats stats = new EntityStats(statValues);
             IEntitySkills skills = new EntitySkills(skillValues);
             IInventory inventory = new Inventory(60);
@@ -41,7 +42,7 @@ namespace GameEngineLib.Tests {
         }
 
         private IItem GetDummyWeapon() {
-            IWeaponInfo info = new WeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3, "Long Sword");
+            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3, "Long Sword");
             Guid id = Guid.NewGuid();
             Item item = new Item(id, info, null, ItemQualityCode.Superior, 1);
             return item;
@@ -50,7 +51,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void EntityCreate() {
             try {
-                IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, "Grok");
+                IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, 365 * 25, "Grok");
                 IEntityStats stats = new EntityStats(statValues);
                 IEntitySkills skills = new EntitySkills(skillValues);
                 IInventory inventory = new Inventory(60);

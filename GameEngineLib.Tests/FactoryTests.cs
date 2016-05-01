@@ -5,14 +5,15 @@ using GameEngine.Factories;
 using GameEngine.Items;
 using GameEntities.Entities;
 using GameEngine;
+using GameEngine.Entities;
 
 namespace GameEngineLib.Tests {
     [TestClass]
     public class FactoryTests {
         [TestMethod]
         public void WeaponsFactoryCreateRandomWeapon() {
-            WeaponsFactory factory = new WeaponsFactory();
-            var creationProfile = new ItemProfile(1, ItemProfileType.InventoryWarrior);
+            ItemsFactory factory = new ItemsFactory();
+            var creationProfile = new ItemProfile(1, EntityOccupation.Warrior);
             IItem item1 = factory.Create(creationProfile);
             Assert.IsNotNull(item1);
             Assert.AreEqual(item1.Quality, item1.Quality);
@@ -20,7 +21,7 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void WeaponsFactoryCreateSpecifiedWeapon() {
-            WeaponsFactory factory = new WeaponsFactory();
+            ItemsFactory factory = new ItemsFactory();
             var creationProfile = new ItemProfile(1, ItemType.Crossbow, ItemQualityCode.Flawless);
             IItem item1 = factory.Create(creationProfile);
             Assert.IsNotNull(item1);
@@ -30,8 +31,9 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void NPCFactoryCreate() {
-            NPCFactory factory = new NPCFactory();
-            var creationProfile = new EntityProfile(10, NameCatagoryCode.HumanFemale, GameEngine.Entities.EntityOccupation.Aristocrat, GameEngine.Entities.EntityRace.Dwarf, 10);
+            ItemsFactory wfactory = new ItemsFactory();
+            NPCFactory factory = new NPCFactory(wfactory);
+            var creationProfile = new EntityProfile(10, EntityOccupation.Fisherman, EntityRace.None, 10);
             IEntity entity = factory.Create(creationProfile);
         }
     }

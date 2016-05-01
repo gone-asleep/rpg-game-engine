@@ -58,7 +58,6 @@ namespace GameEngine {
         [ProtoMember(4)]
         public string Name { get; private set; }
 
-        
         /// <summary>
         /// Current stats of this entity
         /// </summary>
@@ -111,6 +110,8 @@ namespace GameEngine {
             this.Info = info;
             this.Inventory = inventory;
             this.Abilities = abilities;
+            this.MaxHealth = this.Stats.Get(StatType.Constitution) * 10;
+            this.Health = this.MaxHealth;
             this.Effects = new List<Effect>();
         }
 

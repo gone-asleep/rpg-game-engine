@@ -56,6 +56,19 @@ namespace GameEngineLib.Tests {
             }
 
         }
+        [TestMethod]
+        public void TestRandomInt() {
+            // I like this method because of it's ability to be deterministic random
+            // the server can reseed it at any point and keep both -random- generators synced accross
+            // computers
+            GameGlobal.SeedRandomInt(1212, 3434, 42);
+            int rnd1 = GameGlobal.NextRandomInt(100);
+            int rnd2 = GameGlobal.NextRandomInt(100);
+            int rnd3 = GameGlobal.NextRandomInt(100);
+            int rnd4 = GameGlobal.NextRandomInt(100);
+            int rnd5 = GameGlobal.NextRandomInt(100);
+
+        }
 
         private void AreSimiliar(float a, float b) {
             if (Math.Abs(a - b) > float.Epsilon) {
@@ -63,5 +76,8 @@ namespace GameEngineLib.Tests {
                 // Values are within specified tolerance of each other....
             }
         }
+
+
+
     }
 }

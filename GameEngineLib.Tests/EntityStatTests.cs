@@ -31,7 +31,7 @@ namespace GameEngineLib.Tests {
                 Assert.AreEqual(stats.Get(StatType.Wisdom), 3.0f);
                 Assert.AreEqual(stats.Get(StatType.Inteligence), 4.0f);
                 Assert.AreEqual(stats.Get(StatType.Charisma), 5.0f);
-                Assert.AreEqual(stats.Get(StatType.Agility), 6.0f);
+                Assert.AreEqual(stats.Get(StatType.Constitution), 6.0f);
                 Assert.AreEqual(stats.Get(StatType.Luck), 7.0f);
                 Assert.AreEqual(stats.Get(StatType.Dexterity), 8.0f);
             } catch {
@@ -57,7 +57,7 @@ namespace GameEngineLib.Tests {
                 Assert.AreEqual(stats.Get(StatType.Wisdom), Math.Floor(statDistributionValues[(int)StatType.Wisdom] * 100));
                 Assert.AreEqual(stats.Get(StatType.Inteligence), Math.Floor(statDistributionValues[(int)StatType.Inteligence] * 100));
                 Assert.AreEqual(stats.Get(StatType.Charisma), Math.Floor(statDistributionValues[(int)StatType.Charisma] * 100));
-                Assert.AreEqual(stats.Get(StatType.Agility), Math.Floor(statDistributionValues[(int)StatType.Agility] * 100));
+                Assert.AreEqual(stats.Get(StatType.Constitution), Math.Floor(statDistributionValues[(int)StatType.Constitution] * 100));
                 Assert.AreEqual(stats.Get(StatType.Luck), Math.Floor(statDistributionValues[(int)StatType.Luck] * 100));
                 Assert.AreEqual(stats.Get(StatType.Dexterity), Math.Floor(statDistributionValues[(int)StatType.Dexterity] * 100));
             } catch {

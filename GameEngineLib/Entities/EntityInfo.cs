@@ -1,4 +1,5 @@
-﻿using ProtoBuf;
+﻿using GameEngine.Global;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,10 @@ namespace GameEngine.Entities {
         /// </summary>
         EntityOccupation Occupation { get;  }
 
+        /// <summary>
+        /// The day entity was born relative to world begining
+        /// </summary>
+        int DayOfBirth { get; }
 
         /// <summary>
         /// the individuals name of this entity
@@ -44,15 +49,28 @@ namespace GameEngine.Entities {
         [ProtoMember(5)]
         public string Name { get; private set; }
 
+        /// <summary>
+        /// The day entity was born relative to world begining
+        /// </summary>
+        [ProtoMember(6)]
+        public int DayOfBirth { get; private set; }
+       
+        [ProtoMember(6)]
+        public int YearsOld {
+            get {
+                return (GameGlobal.WorldDayCurrent - DayOfBirth) / 365;
+            }
+        }
+
         public EntityInfo() {
         }
 
-        public EntityInfo(EntityRace race, EntityOccupation occupation, string firstName, string lastName=null) {
+        public EntityInfo(EntityRace race, EntityOccupation occupation, int daysOld, string firstName, string lastName=null) {
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Race = race;
             this.Occupation = occupation;
-
+            this.DayOfBirth = (GameGlobal.WorldDayCurrent - daysOld);
             // this generates the full name of the entity as it will be referenced in most places within the game
             if (!string.IsNullOrEmpty(LastName)) {
                 if (Occupation != EntityOccupation.None) {

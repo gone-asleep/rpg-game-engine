@@ -13,6 +13,7 @@ using System.IO;
 using System.Diagnostics;
 using GameEngine.Global;
 using GameEntities.Items;
+using GameEngine.Items.Info;
 namespace GameEngineLib.Tests {
     [TestClass]
     public class SerializationTests {
@@ -38,12 +39,12 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void SerializeItemInfo() {
-            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true, "Healing Potion");
+            IItemInfo info = new ItemConsumableInfo(ItemClassCode.Potion, ItemType.HealingPotion, "Healing Potion");
             IItemInfo infoClone = Serializer.DeepClone(info);
 
             Assert.AreEqual(info.ClassCode, infoClone.ClassCode);
             Assert.AreEqual(info.TypeCode, infoClone.TypeCode);
-            Assert.AreEqual(info.Stackable, infoClone.Stackable);
+            Assert.IsTrue(info is IItemConsumableInfo);
             Assert.AreEqual(info.Name, infoClone.Name);
 
         }
@@ -51,7 +52,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void SerializeItem() {
             
-            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true, "Healing Potion");
+            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, "Healing Potion");
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IItem testItemClone = Serializer.DeepClone(testItem);
 
@@ -64,7 +65,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void SerializeInventory() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion, true);
+            IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             inventory.Set(testItem, 5);
             
@@ -86,7 +87,7 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(statsClone.Get(StatType.Wisdom), statsClone.Get(StatType.Wisdom));
             Assert.AreEqual(statsClone.Get(StatType.Inteligence), statsClone.Get(StatType.Inteligence));
             Assert.AreEqual(statsClone.Get(StatType.Charisma), statsClone.Get(StatType.Charisma));
-            Assert.AreEqual(statsClone.Get(StatType.Agility), statsClone.Get(StatType.Agility));
+            Assert.AreEqual(statsClone.Get(StatType.Constitution), statsClone.Get(StatType.Constitution));
             Assert.AreEqual(statsClone.Get(StatType.Luck), statsClone.Get(StatType.Luck));
             Assert.AreEqual(statsClone.Get(StatType.Dexterity), statsClone.Get(StatType.Dexterity));
         }
@@ -101,7 +102,7 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(statsClone.Get(StatType.Wisdom), Math.Floor(statDistributionValues[(int)StatType.Wisdom] * 100));
             Assert.AreEqual(statsClone.Get(StatType.Inteligence), Math.Floor(statDistributionValues[(int)StatType.Inteligence] * 100));
             Assert.AreEqual(statsClone.Get(StatType.Charisma), Math.Floor(statDistributionValues[(int)StatType.Charisma] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Agility), Math.Floor(statDistributionValues[(int)StatType.Agility] * 100));
+            Assert.AreEqual(statsClone.Get(StatType.Constitution), Math.Floor(statDistributionValues[(int)StatType.Constitution] * 100));
             Assert.AreEqual(statsClone.Get(StatType.Luck), Math.Floor(statDistributionValues[(int)StatType.Luck] * 100));
             Assert.AreEqual(statsClone.Get(StatType.Dexterity), Math.Floor(statDistributionValues[(int)StatType.Dexterity] * 100));
         }
@@ -123,7 +124,7 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void SerializeInfo() {
-            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, "Grok");
+            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, 365 * 25, "Grok");
             IEntityInfo infoClone = Serializer.DeepClone(info);
             Assert.AreEqual(info.Name, infoClone.Name);
             Assert.AreEqual(info.Occupation, infoClone.Occupation);
@@ -141,7 +142,7 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void SerializeEntity() {
-            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, "Grok");
+            IEntityInfo info = new EntityInfo(EntityRace.Human, EntityOccupation.Barbarian, 25 * 365, "Grok");
             IEntityStats stats = new EntityStats(statValues);
             IEntitySkills skills = new EntitySkills(skillValues);
             IInventory inventory = new Inventory(60);
@@ -175,8 +176,8 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void SerializeWeaponsFactory() {
-            WeaponsFactory factory = new WeaponsFactory();
-            WeaponsFactory clone = Serializer.DeepClone(factory);
+            ItemsFactory factory = new ItemsFactory();
+            ItemsFactory clone = Serializer.DeepClone(factory);
             Assert.IsNotNull(clone); // fails due to jagged arrays :( figure out new strategy
         }
 

@@ -11,7 +11,7 @@ namespace GameEngine.Entities.Stats {
         Wisdom = 2,
         Inteligence = 3,
         Charisma = 4,
-        Agility = 5,
+        Constitution = 5,
         Luck = 6,
         Dexterity = 7
     }

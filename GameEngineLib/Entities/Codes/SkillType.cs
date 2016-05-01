@@ -56,6 +56,10 @@ namespace GameEngine.Entities.Skills {
         /// <summary>
         /// spells that transform the target. Specialists are called transmuters.
         /// </summary>
-        Transmutation = 22
+        Transmutation = 22,
+        /// <summary>
+        /// Proficiency in using a Fishing Pole
+        /// </summary>
+        Fishing = 23
     }
 }

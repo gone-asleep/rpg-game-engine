@@ -1,5 +1,6 @@
 ﻿using GameEngine.Global;
 using GameEngine.Items;
+using GameEngine.Items.Info;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
