@@ -42,7 +42,14 @@ namespace GameEngineLib.Tests {
         }
 
         private IItem GetDummyWeapon() {
-            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3, "Long Sword");
+            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 3, "Long Sword");
+            Guid id = Guid.NewGuid();
+            Item item = new Item(id, info, null, ItemQualityCode.Superior, 1);
+            return item;
+        }
+
+        private IItem GetDummyArmor() {
+            IItemInfo info = new ItemArmorInfo(ItemType.ClothCap, ItemEquipType.Head, 5);
             Guid id = Guid.NewGuid();
             Item item = new Item(id, info, null, ItemQualityCode.Superior, 1);
             return item;
@@ -75,7 +82,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void EntityEquipItem() {
             IEntity entity = GetDummyEntity();
-            IItem weapon = GetDummyWeapon();
+            IItem weapon = GetDummyArmor();
             IGlobal global = GetDummyGlobal();
             
             entity.Inventory.Set(weapon, 0);
@@ -89,11 +96,28 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(success, true);
         }
 
+        [TestMethod]
+        public void EntityWieldItem() {
+            IEntity entity = GetDummyEntity();
+            IItem weapon = GetDummyWeapon();
+            IGlobal global = GetDummyGlobal();
+
+            entity.Inventory.Set(weapon, 0);
+
+            bool success = entity.PerformAction(global, new ActionParameters() {
+                action = GeneralAbilities.Wield,
+                entityID = entity.ID,
+                targetIndex = (int)ItemWieldType.LeftHand,
+                targetIndex2 = 0
+            });
+
+            Assert.AreEqual(success, true);
+        }
 
         [TestMethod]
         public void EntityUnequipItem() {
             IEntity entity = GetDummyEntity();
-            IItem weapon = GetDummyWeapon();
+            IItem weapon = GetDummyArmor();
             IGlobal global = GetDummyGlobal();
 
             entity.Inventory.Set(weapon, 0);
@@ -108,6 +132,23 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(success, true);
         }
 
+        [TestMethod]
+        public void EntityUnwieldItem() {
+            IEntity entity = GetDummyEntity();
+            IItem weapon = GetDummyWeapon();
+            IGlobal global = GetDummyGlobal();
+
+            entity.Inventory.Set(weapon, 0);
+            entity.Inventory.SetWielded(ItemWieldType.LeftHand, 0, entity.Stats);
+
+            bool success = entity.PerformAction(global, new ActionParameters() {
+                action = GeneralAbilities.Unwield,
+                entityID = entity.ID,
+                targetIndex = (int)ItemWieldType.LeftHand
+            });
+
+            Assert.AreEqual(success, true);
+        }
 
         [TestMethod]
         public void EntityUnequipMissingItem() {
@@ -117,7 +158,7 @@ namespace GameEngineLib.Tests {
             bool success = entity.PerformAction(global, new ActionParameters() {
                 action = GeneralAbilities.Unequip,
                 entityID = entity.ID,
-                targetIndex = (int)ItemEquipType.LeftHand
+                targetIndex = (int)ItemWieldType.OneHand
             });
 
             Assert.AreEqual(success, false);

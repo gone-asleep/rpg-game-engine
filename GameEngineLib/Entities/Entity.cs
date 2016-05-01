@@ -132,6 +132,10 @@ namespace GameEngine {
                     success = this.Inventory.SetUnequiped(parameter.targetIndex, this.Stats);
                 } else if (parameter.action == GeneralAbilities.Equip) {
                     success = this.Inventory.SetEquiped(parameter.targetIndex, this.Stats);
+                } else if (parameter.action == GeneralAbilities.Unwield) {
+                    success = this.Inventory.SetUnwielded((ItemWieldType)parameter.targetIndex, this.Stats);
+                } else if (parameter.action == GeneralAbilities.Wield) {
+                    success = this.Inventory.SetWielded((ItemWieldType)parameter.targetIndex, parameter.targetIndex2, this.Stats);
                 } else if (parameter.action == GeneralAbilities.DistributeSkillPoints) {
                     success = this.Skills.DistributePoints((StatType)parameter.targetIndex, this.Stats, parameter.targetQuantity);
                 } else if (parameter.action == GeneralAbilities.Move) {

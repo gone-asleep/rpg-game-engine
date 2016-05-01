@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameEngine.Items;
 
 namespace GameEngine.Items.Info {
     [ProtoContract]
     [ProtoInclude(99, typeof(ItemInfo))]
     [ProtoInclude(101, typeof(ItemWeaponInfo))]
-    public interface IItemWeaponInfo : IItemInfo, IEquipableItemInfo, ISkillfullItemInfo {
+    public interface IItemWeaponInfo : IItemInfo, IWieldableItemInfo, ISkillfullItemInfo {
         float BaseDamage { get; }
     }
 
@@ -21,7 +22,7 @@ namespace GameEngine.Items.Info {
         public float BaseDamage { get; private set; }
 
         [ProtoMember(6)]
-        public ItemEquipType EquipType { get; protected set; }
+        public ItemWieldType WieldType { get; protected set; }
 
         [ProtoMember(7)]
         public SkillType ApplyableSkill { get; protected set; }
@@ -30,10 +31,10 @@ namespace GameEngine.Items.Info {
 
         }
 
-        public ItemWeaponInfo(ItemType type, ItemEquipType equipType, SkillType applyableSkill, float baselineDamage, string name = null, string description = null) :
+        public ItemWeaponInfo(ItemType type, ItemWieldType wieldType, SkillType applyableSkill, float baselineDamage, string name = null, string description = null) :
             base(ItemClassCode.Weapon, type, name, description) {
             this.BaseDamage = baselineDamage;
-            this.EquipType = equipType;
+            this.WieldType = wieldType;
             this.ApplyableSkill = applyableSkill;
         }
     }

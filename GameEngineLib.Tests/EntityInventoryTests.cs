@@ -19,7 +19,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryAddItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 3);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
 
             bool setSuccessfull = inventory.Set(testItem, 0);
@@ -29,7 +29,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryGetItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 3);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             inventory.Set(testItem, 0);
 
@@ -40,7 +40,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void InventoryEquipItem() {
             IInventory inventory = new Inventory(60);
-            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemArmorInfo(ItemType.ClothCap, ItemEquipType.Head, 5);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
                 
@@ -55,11 +55,28 @@ namespace GameEngineLib.Tests {
             Assert.IsNull(getItem);
         }
 
+        [TestMethod]
+        public void InventoryWieldItem() {
+            IInventory inventory = new Inventory(60);
+            IItemInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 3);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
+            IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
+
+            IEntityStats stats = new EntityStats();
+            inventory.Set(testItem, 0);
+
+            bool wieldSuccess = inventory.SetWielded(ItemWieldType.LeftHand, 0, stats);
+            Assert.IsTrue(wieldSuccess);
+
+            // ensure we can no longer get the item
+            IItem getItem = inventory.Get(0);
+            Assert.IsNull(getItem);
+        }
 
         [TestMethod]
         public void InventoryUnequipItem() {
             IInventory inventory = new Inventory(60);
-            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemEquipType.LeftHand, SkillType.HeavyBlade, 3);
+            IItemInfo info = new ItemArmorInfo(ItemType.ClothCap, ItemEquipType.Head, 5);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
             IEntityStats stats = new EntityStats();
             IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
@@ -71,7 +88,7 @@ namespace GameEngineLib.Tests {
             Assert.IsTrue(equipSuccess);
             Assert.AreEqual(inventory.Remaining, 60);
 
-            bool unequipSuccess = inventory.SetUnequiped((int)((IItemWeaponInfo)testItem.Info).EquipType, stats);
+            bool unequipSuccess = inventory.SetUnequiped((int)((IItemArmorInfo)testItem.Info).EquipType, stats);
             Assert.IsTrue(unequipSuccess);
             Assert.AreEqual(inventory.Remaining, 59);
 
@@ -80,6 +97,32 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(inventory.Remaining, 60);
             Assert.IsNotNull(getItem);
         }
+
+        [TestMethod]
+        public void InventoryUnwieldItem() {
+            IInventory inventory = new Inventory(60);
+            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 3);
+            IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
+            IEntityStats stats = new EntityStats();
+            IEntityAbility abilities = new EntityAbility(GeneralAbilities.All, ItemAbilities.None, EntityAbilities.ModifyInterationAbilities, EffectAbilities.ModifyMagicAbilities, AIAbilities.None);
+
+            inventory.Set(testItem, 0);
+            Assert.AreEqual(inventory.Remaining, 59);
+            // equip the item
+            bool wieldSuccess = inventory.SetWielded(ItemWieldType.LeftHand, 0, stats);
+            Assert.IsTrue(wieldSuccess);
+            Assert.AreEqual(inventory.Remaining, 60);
+
+            bool unwieldSuccess = inventory.SetUnwielded(ItemWieldType.LeftHand, stats);
+            Assert.IsTrue(unwieldSuccess);
+            Assert.AreEqual(inventory.Remaining, 59);
+
+            // the item should be back in the zero'th position
+            IItem getItem = inventory.Get(0);
+            Assert.AreEqual(inventory.Remaining, 60);
+            Assert.IsNotNull(getItem);
+        }
+
 
         [TestMethod]
         public void InventoryDestoyItem() {

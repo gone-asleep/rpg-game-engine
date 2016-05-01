@@ -60,6 +60,22 @@ namespace GameEngine {
         /// <returns></returns>
         bool SetUnequiped(int equipIndex, IEntityStats stats);
 
+        /// <summary>
+        /// Sets the 
+        /// </summary>
+        /// <param name="inventoryIndex"></param>
+        /// <param name="stats"></param>
+        /// <returns></returns>
+        bool SetWielded(ItemWieldType wieldType, int inventoryIndex, IEntityStats stats);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="equipIndex"></param>
+        /// <param name="stats"></param>
+        /// <returns></returns>
+        bool SetUnwielded(ItemWieldType wieldType, IEntityStats stats);
+
 
         int Size { get; }
 
@@ -86,9 +102,97 @@ namespace GameEngine {
         [ProtoMember(4)]
         private IItem[] equiped;
 
+        [ProtoMember(5)]
+        public IItem wieldedLeftHand { get; private set; }
+
+        [ProtoMember(6)]
+        public IItem wieldedRightHand { get; private set; }
+
         public bool Contains(IItem item) {
             return this.innerList.Contains(item);
         }
+
+
+        public bool SetUnwielded(ItemWieldType wieldType, IEntityStats stats) {
+            bool success = false;
+
+            if (Remaining > 0) {
+                if (wieldType.HasFlag(ItemWieldType.LeftHand)) {
+                    if (this.wieldedLeftHand != null && this.Set(this.wieldedLeftHand, -1)) {
+                        // unapply left hand modifiers
+                        if (wieldedLeftHand.Modifier != null) {
+                            wieldedLeftHand.Modifier.Unapply(stats);
+                        }
+                        // remove right hand also if this is a dual wield item that is occupying both spaces
+                        if (wieldedRightHand == wieldedLeftHand) {
+                            wieldedRightHand = null;
+                        }
+                        // set left hand to empty
+                        wieldedLeftHand = null;
+                        success = true;
+                    }
+                } else if (wieldType.HasFlag(ItemWieldType.RightHand)) {
+                    if (this.wieldedRightHand != null && this.Set(this.wieldedRightHand, -1)) {
+                        // unapply right hand modifiers
+                        if (wieldedRightHand.Modifier != null) {
+                            wieldedRightHand.Modifier.Unapply(stats);
+                        }
+                        // remove left hand also if this is a dual wield item that is occupying both spaces
+                        if (wieldedLeftHand == wieldedRightHand) {
+                            wieldedLeftHand = null;
+                        }
+                        // set right hand to empty
+                        wieldedRightHand = null;
+                        success = true;
+                    }
+                }
+            }
+
+            return success;
+        }
+
+        public bool SetWielded(ItemWieldType wieldType, int inventoryIndex, IEntityStats stats) {
+            bool success = false;
+            IItem item = this.Get(inventoryIndex);
+            if (item != null && item.Info is IWieldableItemInfo) {
+
+                ItemWieldType itemWieldType = ((IWieldableItemInfo)item.Info).WieldType;
+
+                // if an item is currently equiped in that spot
+                // unequip it and add it to the inventory
+                if (itemWieldType == ItemWieldType.OneHand) {
+                    if (wieldType == ItemWieldType.LeftHand) {
+                        // if the left hand is empty or we are able to unwield whats in it
+                        if (wieldedLeftHand == null || this.SetUnwielded(ItemWieldType.LeftHand, stats)) {
+                            wieldedLeftHand = item;
+                            success = true;
+                        }
+                    } else if (wieldType == ItemWieldType.RightHand) {
+                        if (wieldedRightHand == null || this.SetUnwielded(ItemWieldType.RightHand, stats)) {
+                            wieldedRightHand = item;
+                            success = true;
+                        }
+                    }
+                   
+                } else if (itemWieldType == ItemWieldType.BothHands) {
+                    // if hands are empty or we are able to remove whats in them
+                    if ((wieldedLeftHand == null && wieldedRightHand == null) || this.SetUnwielded(ItemWieldType.BothHands, stats)) {
+                        wieldedLeftHand = item;
+                        wieldedRightHand = item;
+                        success = true;
+                    }
+                }
+                // if success apply the new modifiers
+                if (success) {
+                    // apply new modifiers
+                    if (item.Modifier != null) {
+                        item.Modifier.Apply(stats);
+                    }
+                }
+            }
+            return success;
+        }
+
 
         public bool SetUnequiped(int equipIndex, IEntityStats stats) {
             bool success = false;

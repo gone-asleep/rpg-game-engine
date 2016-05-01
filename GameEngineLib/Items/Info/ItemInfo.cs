@@ -12,6 +12,10 @@ namespace GameEngine.Items.Info {
         SkillType ApplyableSkill { get; }
     }
 
+    public interface IWieldableItemInfo {
+        ItemWieldType WieldType { get; }
+    }
+
     public interface IEquipableItemInfo {
         ItemEquipType EquipType { get; }
     }

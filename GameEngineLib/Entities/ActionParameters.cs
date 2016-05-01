@@ -14,8 +14,10 @@ namespace GameEngine.Entities {
         [ProtoMember(3)]
         public int targetIndex { get; set; }
         [ProtoMember(4)]
-        public GeneralAbilities action { get; set; }
+        public int targetIndex2 { get; set; }
         [ProtoMember(5)]
+        public GeneralAbilities action { get; set; }
+        [ProtoMember(6)]
         public float targetQuantity { get; set; }
     }
 }

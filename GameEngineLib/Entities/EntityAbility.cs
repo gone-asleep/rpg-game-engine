@@ -173,6 +173,8 @@ namespace GameEngine.Entities {
         Destroy = 1024,
         TakeDamage = 2048,
         GiveDamage = 4096,
+        Wield = 4096*2,
+        Unwield = 4096*4,
         All = Int32.MaxValue,
         None = 0
     }
