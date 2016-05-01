@@ -31,7 +31,7 @@ namespace GameEngine.Items.Info {
     [ProtoInclude(100, typeof(ItemConsumableInfo))]
     [ProtoInclude(101, typeof(ItemWeaponInfo))]
     [ProtoInclude(102, typeof(ItemToolInfo))]
-    [ProtoInclude(102, typeof(ItemArmorInfo))]
+    [ProtoInclude(103, typeof(ItemArmorInfo))]
     public class ItemInfo : IItemInfo {
         [ProtoMember(1)]
         public ItemClassCode ClassCode { get; protected set; }

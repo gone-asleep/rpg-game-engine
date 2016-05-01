@@ -55,7 +55,6 @@ namespace GameEngine.Entities {
         [ProtoMember(6)]
         public int DayOfBirth { get; private set; }
        
-        [ProtoMember(6)]
         public int YearsOld {
             get {
                 return (GameGlobal.WorldDayCurrent - DayOfBirth) / 365;
