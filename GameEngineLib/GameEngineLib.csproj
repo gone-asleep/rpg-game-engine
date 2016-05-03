@@ -55,12 +55,15 @@
     <Compile Include="AI\AIAbilities.cs" />
     <Compile Include="Areas\Area.cs" />
     <Compile Include="Areas\AreaCode.cs" />
+    <Compile Include="Areas\AreaConnector.cs" />
+    <Compile Include="Areas\AreaConnectorCode.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Effects\EffectAbilities.cs" />
     <Compile Include="Effects\EffectClass.cs" />
     <Compile Include="Effects\EffectInfo.cs" />
     <Compile Include="Effects\EffectType.cs" />
     <Compile Include="Entities\ActionParameters.cs" />
+    <Compile Include="Entities\Codes\EntityCulture.cs" />
     <Compile Include="Entities\EntityAbility.cs" />
     <Compile Include="Entities\EntityInfo.cs" />
     <Compile Include="Entities\Codes\EntityOccupation.cs" />

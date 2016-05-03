@@ -12,6 +12,15 @@ namespace GameEngine.Areas {
     //http://www222.pair.com/sjohn/blueroom/demog.htm
 
     public enum AreaCode : int {
+        Street,
+        
+        Mountains,
+        Plains,
+        Beach,
+        Desert,
+        Forest,
+
+
         Town,
         LargeTown,
         City,
@@ -64,6 +73,11 @@ namespace GameEngine.Areas {
         Tavern,
         Pub,
         Gladiator,
+
+        /// <summary>
+        /// Area of buisiness for shops
+        /// </summary>
+        ServiceRoom,
 
         School,
         Library,
