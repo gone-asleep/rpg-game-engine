@@ -65,6 +65,7 @@
     <Compile Include="FactoryTests.cs" />
     <Compile Include="NameProviderTests.cs" />
     <Compile Include="Calculations.cs" />
+    <Compile Include="EntityCurrencyBagTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngineLib\GameEngineLib.csproj">

@@ -44,6 +44,9 @@ namespace GameEntities.Entities {
                 //...
               }
             },
+            { (EntityRace.Orc | EntityRace.Male), new string[] {
+                "Gat","Xnath","Magub","Naghat","Drikdarok","Wutgar","Torg","Opeg","Bugdul","Onugug"
+            } },
             { (EntityRace.Human | EntityRace.Female), new string[] {
                 "Alyvia","Agate","Arabeth","Ardra",
                 "Brenna",
@@ -151,7 +154,6 @@ namespace GameEntities.Entities {
         private Dictionary<EntityOccupation, float[]> occupationBaseStatsMultiple;
 
 
-
        
          private IEntityInfo GenerateEntityInfo(EntityRace race, EntityOccupation occupation) {
             if (occupation == EntityOccupation.None) {
@@ -177,6 +179,19 @@ namespace GameEntities.Entities {
             return new EntityInfo(race, occupation, 25 * 365, firstName, lastName);
         }
 
+        public void AddOccupation(IEntity entity, EntityOccupation occupation) {
+            if (this.inventoryItemProfiles.Keys.Contains(occupation)) {
+                // get the item profile
+                var itemProfileArray = this.inventoryItemProfiles[occupation].NextWithReplacement();
+                for (int i = 0; i < itemProfileArray.Length; i++) {
+                    IItem item = weaponFactory.Create(new ItemProfile(1, occupation, itemProfileArray[i]));
+                    if (item != null) {
+                        entity.Inventory.Set(item, InventorySlot.Any, entity.Stats);
+                    }
+                }
+            }
+        }
+
         public IEntity Create(EntityProfile profile) {
             IEntityInfo info = GenerateEntityInfo(profile.Race, profile.Occupation);
             IEntityStats stats = GetStatsPoints(profile.Occupation, profile.Level * 10);
@@ -186,18 +201,7 @@ namespace GameEntities.Entities {
             Guid id = Guid.NewGuid();
             IEntity entity = new Entity(id, info, skills, stats, inventory, abilities);
 
-            if (this.inventoryItemProfiles.Keys.Contains(info.Occupation)) {
-                var itemProfileArray = this.inventoryItemProfiles[info.Occupation].NextWithReplacement();
-                for (int i = 0; i < itemProfileArray.Length; i++) {
-                    IItem item = weaponFactory.Create(new ItemProfile(1, info.Occupation, itemProfileArray[i]));
-                    if (item != null) {
-                        inventory.Set(item, i);
-                        if (item.Info.ClassCode == ItemClassCode.Weapon || item.Info.ClassCode == ItemClassCode.Armor) {
-                            inventory.SetEquiped(i, stats);
-                        }
-                    }
-                }
-            }
+            this.AddOccupation(entity, info.Occupation);
 
             return entity;
         }

@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Items.Info {
 
+    public interface IMarketableItemInfo {
+        float MarketValue { get; }
+    }
+
     public interface ISkillfullItemInfo {
         SkillType ApplyableSkill { get; }
     }
@@ -17,7 +21,7 @@ namespace GameEngine.Items.Info {
     }
 
     public interface IEquipableItemInfo {
-        ItemEquipType EquipType { get; }
+        InventorySlot EquipType { get; }
     }
 
     [ProtoContract]
@@ -36,6 +40,7 @@ namespace GameEngine.Items.Info {
     [ProtoInclude(101, typeof(ItemWeaponInfo))]
     [ProtoInclude(102, typeof(ItemToolInfo))]
     [ProtoInclude(103, typeof(ItemArmorInfo))]
+    [ProtoInclude(104, typeof(ItemClothingInfo))]
     public class ItemInfo : IItemInfo {
         [ProtoMember(1)]
         public ItemClassCode ClassCode { get; protected set; }

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using GameEngine.Global;
 using GameEntities.Items;
 using GameEngine.Items.Info;
+using GameEngine.Currency;
 namespace GameEngineLib.Tests {
     [TestClass]
     public class SerializationTests {
@@ -30,6 +31,7 @@ namespace GameEngineLib.Tests {
             Serializer.PrepareSerializer<IInventory>();
             Serializer.PrepareSerializer<IEntityStats>();
             Serializer.PrepareSerializer<IEntitySkills>();
+            Serializer.PrepareSerializer<IEntityCurrencyBag>();
             
             skillValues = new float[GameGlobal.SkillTypeCount];
             for (int i = 0; i < skillValues.Length; i++) {
@@ -39,7 +41,7 @@ namespace GameEngineLib.Tests {
 
         [TestMethod]
         public void SerializeItemInfo() {
-            IItemInfo info = new ItemConsumableInfo(ItemClassCode.Potion, ItemType.HealingPotion, "Healing Potion");
+            IItemInfo info = new ItemConsumableInfo(ItemClassCode.Potion, ItemType.HealingPotion, 5, "Healing Potion");
             IItemInfo infoClone = Serializer.DeepClone(info);
 
             Assert.AreEqual(info.ClassCode, infoClone.ClassCode);
@@ -63,11 +65,20 @@ namespace GameEngineLib.Tests {
         }
 
         [TestMethod]
+        public void SerializeEntityCurrencyBag() {
+            IEntityCurrencyBag currencyBag = new EntityCurrencyBag(1, 2, 3);
+            IEntityCurrencyBag currencyBagClone = Serializer.DeepClone(currencyBag);
+            Assert.AreEqual(currencyBagClone.Copper, currencyBag.Copper);
+            Assert.AreEqual(currencyBagClone.Silver, currencyBag.Silver);
+            Assert.AreEqual(currencyBagClone.Gold, currencyBag.Gold);
+        }
+
+        [TestMethod]
         public void SerializeInventory() {
             IInventory inventory = new Inventory(60);
             IItemInfo info = new ItemInfo(ItemClassCode.Potion, ItemType.HealingPotion);
             IItem testItem = new Item(Guid.NewGuid(), info, null, ItemQualityCode.Superior, 1);
-            inventory.Set(testItem, 5);
+            inventory.Set(testItem, InventorySlot.Inventory13, null);
             
             IInventory inventoryClone = Serializer.DeepClone(inventory);
 
@@ -158,7 +169,7 @@ namespace GameEngineLib.Tests {
         [TestMethod]
         public void SerializeActionParameters() {
             ActionParameters parameters = new ActionParameters() {
-                action = GeneralAbilities.Equip,
+                action = GeneralAbilities.Give,
                 entityID = Guid.NewGuid(),
                 itemID = Guid.NewGuid(),
                 targetIndex = 1,

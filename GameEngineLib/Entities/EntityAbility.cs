@@ -161,11 +161,10 @@ namespace GameEngine.Entities {
     [Flags]
     public enum GeneralAbilities : int {
         ModifyGeneral = 1,
-        Move = 2,
+        MoveInventory = 2,
         Use = 4,
         Give = 8,
-        Equip = 16,
-        Unequip = 32,
+        
         Receive = 64,
         AddEffect = 128,
         RemoveEffect = 256,
@@ -173,8 +172,6 @@ namespace GameEngine.Entities {
         Destroy = 1024,
         TakeDamage = 2048,
         GiveDamage = 4096,
-        Wield = 4096*2,
-        Unwield = 4096*4,
         All = Int32.MaxValue,
         None = 0
     }

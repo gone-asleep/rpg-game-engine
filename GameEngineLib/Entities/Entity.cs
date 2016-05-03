@@ -58,6 +58,8 @@ namespace GameEngine {
         [ProtoMember(4)]
         public string Name { get; private set; }
 
+
+
         /// <summary>
         /// Current stats of this entity
         /// </summary>
@@ -89,7 +91,25 @@ namespace GameEngine {
         public IEntityAbility Abilities { get; private set; }
 
 
-        
+        #region Toying with the idea of a system where the player appears a certain way which then determines how entities may act in return
+
+        [ProtoMember(10)]
+        public float AppearanceOfWealth { get; private set; }
+
+        [ProtoMember(11)]
+        public float AppearanceOfIntellect { get; private set; }
+
+        [ProtoMember(12)]
+        public float AppearanceOfHonesty { get; private set; }
+
+        [ProtoMember(13)]
+        public float AppearanceOfHostility { get; private set; }
+
+        [ProtoMember(14)]
+        public float AppearanceOfPower { get; private set; }
+
+        #endregion
+
         /// <summary>
         /// Effects Applied to this Entity
         /// </summary>
@@ -123,30 +143,37 @@ namespace GameEngine {
                 bool success = false;
                 // retrieve the item
                 if (parameter.action == GeneralAbilities.Receive) {
-                    success = this.Inventory.Set(global.World.GetItem(parameter.itemID), parameter.targetIndex);
+                    var item = global.World.GetItem(parameter.itemID);
+                    if (item != null) {
+                        success = (this.Inventory.Set(item, (InventorySlot)parameter.targetIndex, this.Stats) || this.Inventory.Set(item, (InventorySlot)(-1), this.Stats));
+                    }
                 } else if (parameter.action == GeneralAbilities.Destroy) {
-                    success = this.Inventory.Destroy(parameter.targetIndex, (int)parameter.targetQuantity);
+                    var item = this.Inventory.Get((InventorySlot)parameter.targetIndex, this.Stats);
+                    if (item != null) {
+                        if (parameter.targetQuantity <= item.Count) {
+                            item.Count -= (int)parameter.targetQuantity;
+                            if (item.Count != 0) {
+                                this.Inventory.Set(item, (InventorySlot)parameter.targetIndex, this.Stats);
+                            }
+                            success = true;
+                        }
+                    }
                 } else if (parameter.action == GeneralAbilities.Give) {
-                    success = this.Inventory.Destroy(parameter.targetIndex, (int)parameter.targetQuantity); // essentially a destroy opperation
-                } else if (parameter.action == GeneralAbilities.Unequip) {
-                    success = this.Inventory.SetUnequiped(parameter.targetIndex, this.Stats);
-                } else if (parameter.action == GeneralAbilities.Equip) {
-                    success = this.Inventory.SetEquiped(parameter.targetIndex, this.Stats);
-                } else if (parameter.action == GeneralAbilities.Unwield) {
-                    success = this.Inventory.SetUnwielded((ItemWieldType)parameter.targetIndex, this.Stats);
-                } else if (parameter.action == GeneralAbilities.Wield) {
-                    success = this.Inventory.SetWielded((ItemWieldType)parameter.targetIndex, parameter.targetIndex2, this.Stats);
-                } else if (parameter.action == GeneralAbilities.DistributeSkillPoints) {
+                    var item = this.Inventory.Get((InventorySlot)parameter.targetIndex, this.Stats);
+                    if (item != null) {
+                        success = true;
+                    }
+                }else if (parameter.action == GeneralAbilities.DistributeSkillPoints) {
                     success = this.Skills.DistributePoints((StatType)parameter.targetIndex, this.Stats, parameter.targetQuantity);
-                } else if (parameter.action == GeneralAbilities.Move) {
+                } else if (parameter.action == GeneralAbilities.MoveInventory) {
                     //this.Position = parameter.position;
-                    success = true;
+                    success = this.Inventory.Swap((InventorySlot)parameter.targetIndex, (InventorySlot)parameter.targetIndex2, this.Stats);
                 } else if (parameter.action == GeneralAbilities.TakeDamage) {
                     success = this.AdjustHealth(parameter.targetQuantity);
                 } else if (parameter.action == GeneralAbilities.GiveDamage) {
                     success = true; // do nothing? not sure
                 } else if (parameter.action == GeneralAbilities.Use) {
-                    IItem item = this.Inventory.Get(parameter.targetIndex);
+                    IItem item = this.Inventory.Get((InventorySlot)parameter.targetIndex, this.Stats);
                     // somehow an item is used
                     if (item != null) {
                         success = true; // for now

@@ -11,7 +11,7 @@ namespace GameEngine.Items.Info {
     [ProtoContract]
     [ProtoInclude(99, typeof(ItemInfo))]
     [ProtoInclude(101, typeof(ItemWeaponInfo))]
-    public interface IItemWeaponInfo : IItemInfo, IWieldableItemInfo, ISkillfullItemInfo {
+    public interface IItemWeaponInfo : IItemInfo, IWieldableItemInfo, ISkillfullItemInfo, IMarketableItemInfo {
         float BaseDamage { get; }
     }
 
@@ -27,11 +27,14 @@ namespace GameEngine.Items.Info {
         [ProtoMember(7)]
         public SkillType ApplyableSkill { get; protected set; }
 
+        [ProtoMember(8)]
+        public float MarketValue { get; protected set; }
+
         public ItemWeaponInfo() {
 
         }
 
-        public ItemWeaponInfo(ItemType type, ItemWieldType wieldType, SkillType applyableSkill, float baselineDamage, string name = null, string description = null) :
+        public ItemWeaponInfo(ItemType type, ItemWieldType wieldType, SkillType applyableSkill, float marketValue, float baselineDamage, string name = null, string description = null) :
             base(ItemClassCode.Weapon, type, name, description) {
             this.BaseDamage = baselineDamage;
             this.WieldType = wieldType;

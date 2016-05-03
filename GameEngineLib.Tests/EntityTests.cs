@@ -42,14 +42,14 @@ namespace GameEngineLib.Tests {
         }
 
         private IItem GetDummyWeapon() {
-            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 3, "Long Sword");
+            IItemWeaponInfo info = new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.OneHand, SkillType.HeavyBlade, 10, 3, "Long Sword");
             Guid id = Guid.NewGuid();
             Item item = new Item(id, info, null, ItemQualityCode.Superior, 1);
             return item;
         }
 
         private IItem GetDummyArmor() {
-            IItemInfo info = new ItemArmorInfo(ItemType.ClothCap, ItemEquipType.Head, 5);
+            IItemInfo info = new ItemArmorInfo(ItemType.ClothCap, InventorySlot.Head, 10, 5);
             Guid id = Guid.NewGuid();
             Item item = new Item(id, info, null, ItemQualityCode.Superior, 1);
             return item;
@@ -80,53 +80,89 @@ namespace GameEngineLib.Tests {
         }
 
         [TestMethod]
-        public void EntityEquipItem() {
+        public void EntityMoveInventoryToEquipedHead() {
             IEntity entity = GetDummyEntity();
             IItem weapon = GetDummyArmor();
             IGlobal global = GetDummyGlobal();
-            
-            entity.Inventory.Set(weapon, 0);
+
+            entity.Inventory.Set(weapon, InventorySlot.Inventory1, entity.Stats);
 
             bool success = entity.PerformAction(global, new ActionParameters() {
-                 action = GeneralAbilities.Equip,
+                 action = GeneralAbilities.MoveInventory,
                  entityID = entity.ID,
-                 targetIndex = 0
+                 targetIndex2 = (int)InventorySlot.Head,
+                 targetIndex = (int)InventorySlot.Inventory1
             });
 
             Assert.AreEqual(success, true);
+            // no inventory spaces should be used because item is equiped
+            Assert.AreEqual(entity.Inventory.Remaining, entity.Inventory.Size);
         }
 
         [TestMethod]
-        public void EntityWieldItem() {
+        public void EntityMoveInventoryToWieldedPrimary() {
             IEntity entity = GetDummyEntity();
             IItem weapon = GetDummyWeapon();
             IGlobal global = GetDummyGlobal();
 
-            entity.Inventory.Set(weapon, 0);
+            entity.Inventory.Set(weapon, InventorySlot.Inventory1, entity.Stats);
 
             bool success = entity.PerformAction(global, new ActionParameters() {
-                action = GeneralAbilities.Wield,
+                action = GeneralAbilities.MoveInventory,
                 entityID = entity.ID,
-                targetIndex = (int)ItemWieldType.LeftHand,
-                targetIndex2 = 0
+                targetIndex2 = (int)InventorySlot.WieldPrimary,
+                targetIndex = (int)InventorySlot.Inventory1
             });
 
             Assert.AreEqual(success, true);
+            // no inventory spaces should be used because item is wielded
+            Assert.AreEqual(entity.Inventory.Remaining, entity.Inventory.Size);
         }
 
         [TestMethod]
-        public void EntityUnequipItem() {
+        public void EntityMoveInventoryToWieldedPrimaryAndToWieldedSecondary() {
+            IEntity entity = GetDummyEntity();
+            IItem weapon = GetDummyWeapon();
+            IItem weapon2 = GetDummyWeapon();
+            IGlobal global = GetDummyGlobal();
+
+            entity.Inventory.Set(weapon, InventorySlot.Inventory1, entity.Stats);
+            entity.Inventory.Set(weapon2, InventorySlot.Inventory2, entity.Stats);
+
+            bool success = entity.PerformAction(global, new ActionParameters() {
+                action = GeneralAbilities.MoveInventory,
+                entityID = entity.ID,
+                targetIndex2 = (int)InventorySlot.WieldPrimary,
+                targetIndex = (int)InventorySlot.Inventory1
+            });
+
+            Assert.AreEqual(success, true);
+
+            success = entity.PerformAction(global, new ActionParameters() {
+                action = GeneralAbilities.MoveInventory,
+                entityID = entity.ID,
+                targetIndex2 = (int)InventorySlot.WieldSecondary,
+                targetIndex = (int)InventorySlot.Inventory2
+            });
+
+            Assert.AreEqual(success, true);
+            // no inventory spaces should be used because items are wielded
+            Assert.AreEqual(entity.Inventory.Remaining, entity.Inventory.Size);
+        }
+
+        [TestMethod]
+        public void EntityInventoryEquipeedToInventory() {
             IEntity entity = GetDummyEntity();
             IItem weapon = GetDummyArmor();
             IGlobal global = GetDummyGlobal();
 
-            entity.Inventory.Set(weapon, 0);
-            entity.Inventory.SetEquiped(0, entity.Stats);
+            entity.Inventory.Set(weapon, ((IEquipableItemInfo)weapon.Info).EquipType, entity.Stats);
 
             bool success = entity.PerformAction(global, new ActionParameters() {
-                action = GeneralAbilities.Unequip,
+                action = GeneralAbilities.MoveInventory,
                 entityID = entity.ID,
-                targetIndex = (int)((IEquipableItemInfo)weapon.Info).EquipType
+                targetIndex = (int)((IEquipableItemInfo)weapon.Info).EquipType,
+                targetIndex2 = (int)InventorySlot.Inventory1
             });
 
             Assert.AreEqual(success, true);
@@ -138,13 +174,13 @@ namespace GameEngineLib.Tests {
             IItem weapon = GetDummyWeapon();
             IGlobal global = GetDummyGlobal();
 
-            entity.Inventory.Set(weapon, 0);
-            entity.Inventory.SetWielded(ItemWieldType.LeftHand, 0, entity.Stats);
+            entity.Inventory.Set(weapon, InventorySlot.WieldPrimary, entity.Stats);
 
             bool success = entity.PerformAction(global, new ActionParameters() {
-                action = GeneralAbilities.Unwield,
+                action = GeneralAbilities.MoveInventory,
                 entityID = entity.ID,
-                targetIndex = (int)ItemWieldType.LeftHand
+                targetIndex = (int)InventorySlot.WieldPrimary,
+                targetIndex2 = (int)InventorySlot.Inventory1
             });
 
             Assert.AreEqual(success, true);
@@ -156,9 +192,10 @@ namespace GameEngineLib.Tests {
             IGlobal global = GetDummyGlobal();
 
             bool success = entity.PerformAction(global, new ActionParameters() {
-                action = GeneralAbilities.Unequip,
+                action = GeneralAbilities.MoveInventory,
                 entityID = entity.ID,
-                targetIndex = (int)ItemWieldType.OneHand
+                targetIndex = (int)InventorySlot.WieldPrimary,
+                targetIndex2 = (int)InventorySlot.Inventory1
             });
 
             Assert.AreEqual(success, false);
@@ -170,9 +207,10 @@ namespace GameEngineLib.Tests {
             IGlobal global = GetDummyGlobal();
 
             bool success = entity.PerformAction(global, new ActionParameters() {
-                action = GeneralAbilities.Equip,
+                action = GeneralAbilities.MoveInventory,
                 entityID = entity.ID,
-                targetIndex = 0
+                targetIndex = (int)InventorySlot.Inventory1,
+                targetIndex2 = (int)InventorySlot.Head
             });
 
             Assert.AreEqual(success, false);

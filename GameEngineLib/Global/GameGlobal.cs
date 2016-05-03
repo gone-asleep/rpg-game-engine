@@ -112,6 +112,10 @@ namespace GameEngine.Global {
 
     public static class GameGlobal {
 
+        public static readonly int GoldAbsoluteValue = 100;
+        public static readonly int SilverAbsoluteValue = 10;
+        public static readonly int CopperAbsoluteValue = 1;
+
         public static readonly int WorldDayZero = 500 * 365;
 
         public static int WorldDayCurrent = 0 + WorldDayZero;
@@ -134,7 +138,7 @@ namespace GameEngine.Global {
         /// <summary>
         /// The Total Number of ways an item can be equiped to a player
         /// </summary>
-        public static readonly int EquipTypeCount = Enum.GetNames(typeof(ItemEquipType)).Count();
+        public static readonly int EquipTypeCount = Enum.GetNames(typeof(InventorySlot)).Count() - 2;
 
         public static readonly int OccupationTypeCount = Enum.GetNames(typeof(EntityOccupation)).Count();
 
