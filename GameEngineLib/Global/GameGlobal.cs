@@ -138,7 +138,8 @@ namespace GameEngine.Global {
         /// <summary>
         /// The Total Number of ways an item can be equiped to a player
         /// </summary>
-        public static readonly int EquipTypeCount = Enum.GetNames(typeof(InventorySlot)).Count() - 2;
+        public static readonly int TotalTypeCount = (int)InventorySlot.Inventory60;
+        public static readonly int EquipedTypeCount = (int)InventorySlot.Inventory1 - 1;
 
         public static readonly int OccupationTypeCount = Enum.GetNames(typeof(EntityOccupation)).Count();
 

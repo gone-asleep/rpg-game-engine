@@ -13,5 +13,6 @@ namespace GameEngine.Items {
         Tool = 16,
         Armor = 32,
         Clothing = 64,
+        Currency = 128
     }
 }

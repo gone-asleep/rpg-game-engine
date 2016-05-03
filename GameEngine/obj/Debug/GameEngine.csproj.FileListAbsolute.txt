@@ -14,12 +14,12 @@ D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\GameEngine.pdb
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\GameEngineLib.dll
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\GameEntities.dll
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\protobuf-net.dll
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\Weighted Randomizer.dll
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\GameEngineLib.pdb
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\GameEntities.pdb
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\protobuf-net.pdb
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\protobuf-net.xml
+D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\Weighted Randomizer.pdb
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\obj\Debug\GameEngine.csprojResolveAssemblyReference.cache
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\obj\Debug\GameEngine.exe
 D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\obj\Debug\GameEngine.pdb
-D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\Weighted Randomizer.dll
-D:\Projects\rpg-game-engine\rpg-game-engine\GameEngine\bin\Debug\Weighted Randomizer.pdb

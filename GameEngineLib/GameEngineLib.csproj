@@ -55,7 +55,6 @@
     <Compile Include="AI\AIAbilities.cs" />
     <Compile Include="Areas\Area.cs" />
     <Compile Include="Areas\AreaCode.cs" />
-    <Compile Include="Currency\EntityCurrencyBag.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Effects\EffectAbilities.cs" />
     <Compile Include="Effects\EffectClass.cs" />
@@ -70,7 +69,6 @@
     <Compile Include="Entities\Codes\SkillType.cs" />
     <Compile Include="Entities\Codes\StatModifierType.cs" />
     <Compile Include="Entities\Codes\StatType.cs" />
-    <Compile Include="Entities\Inventory2.cs" />
     <Compile Include="Entities\NPCStats.cs" />
     <Compile Include="Entities\Stats\StatValueModifier.cs" />
     <Compile Include="Factories\Factory.cs" />

@@ -58,12 +58,6 @@ namespace GameEngine {
         [ProtoMember(2)]
         public int Remaining { get; private set; }
 
-        /// <summary>
-        /// The size of just the actual inventory 
-        /// not the equip or wielded item spaces
-        /// </summary>
-        private int inventoryOffset;
-
         [ProtoMember(3)]
         private IItem[] innerList;
 
@@ -99,6 +93,7 @@ namespace GameEngine {
             return success;
         }
 
+        // todo add logic for auto wielding weapons
         private int GetEmptyIndex(IItem item, InventorySlot etype) {
             if (etype != InventorySlot.Any && etype != InventorySlot.AnyNonEquiped) {
                  if (innerList[(int)etype] != null) {
@@ -142,7 +137,7 @@ namespace GameEngine {
                 return false;
             }
             // if we are setting it to a unequiped location
-            if (index > 11) {
+            if (index >= (int)InventorySlot.Inventory1) {
                 IItem existingItem = innerList[index];
                 if (existingItem == null) {
                     innerList[index] = item;
@@ -189,7 +184,6 @@ namespace GameEngine {
                     success = true;
                 }
             }
-            
 
             // if success apply the new modifiers
             if (success) {
@@ -207,7 +201,7 @@ namespace GameEngine {
             int index = (int)etype;
             IItem item = innerList[index];
             if (index < this.innerList.Length && item != null) {
-                if (index > 11) {
+                if (index >= (int)InventorySlot.Inventory1) {
                     Remaining++;
                 } else { // equiped item so remove modifier
                     if (innerList[index].Modifier != null) {
@@ -223,9 +217,7 @@ namespace GameEngine {
 
         }
         public Inventory(int inventorySize) {
-            Debug.Assert(inventoryOffset <= 60);
-            this.inventoryOffset = 61 - inventorySize;
-            this.innerList = new IItem[GameGlobal.EquipTypeCount - (61 - inventorySize)];
+            this.innerList = new IItem[GameGlobal.TotalTypeCount - (61 - inventorySize)];
             this.Size = inventorySize;
             this.Remaining = inventorySize;
         }

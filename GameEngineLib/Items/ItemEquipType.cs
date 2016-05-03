@@ -89,7 +89,6 @@ namespace GameEngine.Items {
         Inventory60 = 71,
         Any = 72,
         AnyNonEquiped = 73,
-
-
+        Money = 74
     }
 }

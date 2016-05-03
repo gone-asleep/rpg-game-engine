@@ -14,7 +14,6 @@ using System.Diagnostics;
 using GameEngine.Global;
 using GameEntities.Items;
 using GameEngine.Items.Info;
-using GameEngine.Currency;
 namespace GameEngineLib.Tests {
     [TestClass]
     public class SerializationTests {
@@ -31,7 +30,6 @@ namespace GameEngineLib.Tests {
             Serializer.PrepareSerializer<IInventory>();
             Serializer.PrepareSerializer<IEntityStats>();
             Serializer.PrepareSerializer<IEntitySkills>();
-            Serializer.PrepareSerializer<IEntityCurrencyBag>();
             
             skillValues = new float[GameGlobal.SkillTypeCount];
             for (int i = 0; i < skillValues.Length; i++) {
@@ -62,15 +60,6 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(testItem.ID, testItemClone.ID);
             Assert.AreEqual(testItem.Quality, testItemClone.Quality);
             Assert.AreEqual(testItem.Info, testItemClone.Info);
-        }
-
-        [TestMethod]
-        public void SerializeEntityCurrencyBag() {
-            IEntityCurrencyBag currencyBag = new EntityCurrencyBag(1, 2, 3);
-            IEntityCurrencyBag currencyBagClone = Serializer.DeepClone(currencyBag);
-            Assert.AreEqual(currencyBagClone.Copper, currencyBag.Copper);
-            Assert.AreEqual(currencyBagClone.Silver, currencyBag.Silver);
-            Assert.AreEqual(currencyBagClone.Gold, currencyBag.Gold);
         }
 
         [TestMethod]

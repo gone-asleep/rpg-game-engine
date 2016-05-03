@@ -21,8 +21,9 @@ namespace GameEntities.Items {
             { ItemType.LongSword, new ItemWeaponInfo(ItemType.LongSword, ItemWieldType.BothHands, SkillType.HeavyBlade, 5, 3, "Long Sword") },
             { ItemType.QuarterStaff, new ItemWeaponInfo(ItemType.QuarterStaff, ItemWieldType.OneHand, SkillType.StaffWeapon, 5, 4, "Quarter Staff") },
             { ItemType.LongStaff, new ItemWeaponInfo(ItemType.LongStaff, ItemWieldType.OneHand, SkillType.StaffWeapon, 5, 4, "Long Staff") },
-           
-          
+            { ItemType.CopperCoin, new ItemConsumableInfo(ItemClassCode.Currency, ItemType.CopperCoin,  GameGlobal.CopperAbsoluteValue, "Copper Coin") },
+            { ItemType.SilverCoin, new ItemConsumableInfo(ItemClassCode.Currency,ItemType.SilverCoin,  GameGlobal.SilverAbsoluteValue, "Silver Coin") },
+            { ItemType.GoldCoin, new ItemConsumableInfo(ItemClassCode.Currency,ItemType.GoldCoin,  GameGlobal.GoldAbsoluteValue , "Gold Coin") },
             { ItemType.Javelin, new ItemWeaponInfo(ItemType.Javelin, ItemWieldType.OneHand, SkillType.RangeWeapon, 5, 6, "Javelin") },
             { ItemType.GreatClub, new ItemWeaponInfo(ItemType.GreatClub, ItemWieldType.OneHand, SkillType.BluntWeapon, 5, 10, "Great Club") },
             { ItemType.Dagger, new ItemWeaponInfo(ItemType.Dagger, ItemWieldType.OneHand, SkillType.LightBlade, 5, 4, "Dagger")},

@@ -57,6 +57,9 @@ namespace GameEngine.Items {
         FishingHook,
         FishingNet,
         CrabTrap,
+        CopperCoin,
+        SilverCoin,
+        GoldCoin,
         /// <summary>
         /// Fishing Bait Type, Worm
         /// </summary>
