@@ -1,15 +1,12 @@
-﻿using GameEngine.Entities;
-using GameEngine.Entities.Skills;
-using GameEngine.Entities.Stats;
-using GameEngine.Factories;
+﻿using GameData;
+using GameData.Info;
+using GameEngine.Entities;
 using GameEngine.Global.Providers;
 using GameEngine.Items;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Global {
     public interface IGlobal {
@@ -111,65 +108,16 @@ namespace GameEngine.Global {
     }
 
     public static class GameGlobal {
-
-        public static readonly int GoldAbsoluteValue = 100;
-        public static readonly int SilverAbsoluteValue = 10;
-        public static readonly int CopperAbsoluteValue = 1;
-
-        public static readonly int WorldDayZero = 500 * 365;
-
-        public static int WorldDayCurrent = 0 + WorldDayZero;
-
-        /// <summary>
-        /// The Total Number of Stat Types
-        /// </summary>
-        public static readonly int StatTypeCount = Enum.GetNames(typeof(StatType)).Count();
-
-        /// <summary>
-        /// The Total Number of Skill Types
-        /// </summary>
-        public static readonly int SkillTypeCount = Enum.GetNames(typeof(SkillType)).Count();
-
-        /// <summary>
-        /// The Total Number of Items Types
-        /// </summary>
-        public static readonly int ItemTypeCount = Enum.GetNames(typeof(ItemType)).Count();
-
-        /// <summary>
-        /// The Total Number of ways an item can be equiped to a player
-        /// </summary>
-        public static readonly int TotalTypeCount = (int)InventorySlot.Inventory60;
-        public static readonly int EquipedTypeCount = (int)InventorySlot.Inventory1 - 1;
-
-        public static readonly int OccupationTypeCount = Enum.GetNames(typeof(EntityOccupation)).Count();
-
-        public static readonly int RaceTypeCount = Enum.GetNames(typeof(EntityRace)).Count();
-
-        public static readonly int MinRaceCode = 1 << 2;
-        public static readonly int MaxRaceCode = 18 << 2;
-
-        /// <summary>
-        /// Factories Used for generating all Game Items/Entities/Effects
-        /// </summary>
-        public static FactoriesProvider Factories { get; private set; }
-
         /// <summary>
         /// ID Provider provides IDs to all Game objects
         /// </summary>
         public static IDProvider IDs { get; private set; }
-
 
         /// <summary>
         /// This Lookup Provides Information about how Skills Effect an Entities Stats
         /// When used
         /// </summary>
         private static SkillStatInfo[][] SkillStateInfo;
-
-        /// <summary>
-        /// This Lookup Provides Information about how skills can be applied to 
-        /// Item Types
-        /// </summary>
-        private static ItemAppliedSkillStatInfo[] SkilledItemUseInfo;
 
         public static IGlobal GlobalInfo;
 
@@ -202,15 +150,10 @@ namespace GameEngine.Global {
         static GameGlobal() {
             rnd = new Random();
 
-            Factories = new FactoriesProvider();
-
             // initialize the skill state info
-            SkillStateInfo = new SkillStatInfo[SkillTypeCount][];
-            for (int i = 0; i < GameGlobal.StatTypeCount - 1; i++)
-                SkillStateInfo[i] = new SkillStatInfo[StatTypeCount];
-
-            // initialize Weapon Stat Info
-            SkilledItemUseInfo = new ItemAppliedSkillStatInfo[ItemTypeCount];
+            SkillStateInfo = new SkillStatInfo[Globals.SkillTypeCount][];
+            for (int i = 0; i < Globals.StatTypeCount - 1; i++)
+                SkillStateInfo[i] = new SkillStatInfo[Globals.StatTypeCount];
 
             // create the ID Provider
             IDs = new IDProvider();
@@ -248,13 +191,6 @@ namespace GameEngine.Global {
         }
 
         public static float CalculateWeaponDamage(Item item, EntityStats stats) {
-            ItemAppliedSkillStatInfo info = SkilledItemUseInfo[(int)item.Info.TypeCode];
-
-            if (info.Function == WeaponStatCalculationFunction.StrengthAndDexterity) {
-                //float augmentedStrength = stats.Get(info.appliedSkill, StatType.Strength); // this doesn't have to go back to the object, we have all info here
-                //return (item.Quality * info.attackDamageBase) + // the base attack damage multiplied by the quality of the weapon
-                //        (augmentedStrength * info.attackModifier);
-            }
             return 0;
         }
 

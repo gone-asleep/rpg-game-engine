@@ -44,15 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeProbability.cs" />
-    <Compile Include="Effects\EffectInformation.cs" />
-    <Compile Include="Entities\NPCFactory.cs" />
-    <Compile Include="Items\ItemsFactory.cs" />
-    <Compile Include="Maps\MapConstructors.cs" />
-    <Compile Include="NameProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameData\GameData.csproj">
+      <Project>{296793ae-dc16-4850-8119-298f3966fcea}</Project>
+      <Name>GameData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngineLib\GameEngineLib.csproj">
       <Project>{929de6e0-e649-48d4-88a2-8f40d9c8d4d3}</Project>
       <Name>GameEngineLib</Name>

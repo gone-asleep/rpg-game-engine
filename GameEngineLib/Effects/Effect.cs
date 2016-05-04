@@ -1,4 +1,5 @@
-﻿using GameEngine.Global;
+﻿using GameData.Info;
+using GameEngine.Global;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,19 +1,12 @@
-﻿using GameEngine.Entities;
-using GameEngine.Entities.Skills;
-using GameEngine.Entities.Stats;
-using GameEngine.Global;
+﻿using GameData;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine {
+
     [ProtoContract]
     [ProtoInclude(100, typeof(EntityStats))]
-    [ProtoInclude(200, typeof(NPCStats))]
     public interface IEntityStats {
 
         /// <summary>
@@ -77,8 +70,8 @@ namespace GameEngine {
         public EntityStats(float[] statTable = null) {
             this.requiresRefresh = false;
             this.modifiers = new List<StatModifier>();
-            this.computedStats = new float[GameGlobal.StatTypeCount];
-            this.baseLineStats = new float[GameGlobal.StatTypeCount];
+            this.computedStats = new float[Globals.StatTypeCount];
+            this.baseLineStats = new float[Globals.StatTypeCount];
             if (statTable != null) {
                 Array.Copy(statTable, this.baseLineStats, this.baseLineStats.Length);
                 this.requiresRefresh = true;
@@ -150,7 +143,7 @@ namespace GameEngine {
         [ProtoAfterDeserialization]
         private void OnDeserialize() {
             // do not pass computed stats, instead recalculate them on first use
-            this.computedStats = new float[GameGlobal.StatTypeCount];
+            this.computedStats = new float[Globals.StatTypeCount];
             this.requiresRefresh = true;
 
             if (this.modifiers == null)

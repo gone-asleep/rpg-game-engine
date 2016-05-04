@@ -1,17 +1,13 @@
-﻿using GameEngine;
+﻿using GameData;
+using GameData.Info;
 using GameEngine.Effects;
-using System.Numerics;
+using GameEngine.Entities;
+using GameEngine.Global;
+using GameEngine.Items;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameEngine.Items;
-using GameEngine.Global;
 using System.Diagnostics;
-using GameEngine.Entities.Stats;
-using GameEngine.Entities;
-using ProtoBuf;
 
 namespace GameEngine {
     [ProtoContract]

@@ -52,31 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\AIAbilities.cs" />
     <Compile Include="Areas\Area.cs" />
-    <Compile Include="Areas\AreaCode.cs" />
     <Compile Include="Areas\AreaConnector.cs" />
-    <Compile Include="Areas\AreaConnectorCode.cs" />
+    <Compile Include="CodeProbability.cs" />
     <Compile Include="Effects\Effect.cs" />
-    <Compile Include="Effects\EffectAbilities.cs" />
-    <Compile Include="Effects\EffectClass.cs" />
-    <Compile Include="Effects\EffectInfo.cs" />
-    <Compile Include="Effects\EffectType.cs" />
-    <Compile Include="Entities\ActionParameters.cs" />
-    <Compile Include="Entities\Codes\EntityCulture.cs" />
+    <Compile Include="Network\ActionParameters.cs" />
     <Compile Include="Entities\EntityAbility.cs" />
-    <Compile Include="Entities\EntityInfo.cs" />
-    <Compile Include="Entities\Codes\EntityOccupation.cs" />
-    <Compile Include="Entities\Codes\EntityRace.cs" />
     <Compile Include="Entities\EntitySkills.cs" />
-    <Compile Include="Entities\Codes\SkillType.cs" />
-    <Compile Include="Entities\Codes\StatModifierType.cs" />
-    <Compile Include="Entities\Codes\StatType.cs" />
-    <Compile Include="Entities\NPCStats.cs" />
     <Compile Include="Entities\Stats\StatValueModifier.cs" />
+    <Compile Include="Factories\AreaFactory.cs" />
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\IFactoryProducer.cs" />
-    <Compile Include="Factories\Profiles\EffectProfile.cs" />
+    <Compile Include="Factories\ItemsFactory.cs" />
+    <Compile Include="Factories\NPCFactory.cs" />
+    <Compile Include="Factories\Profiles\AreaProfile.cs" />
     <Compile Include="Factories\Profiles\EntityProfile.cs" />
     <Compile Include="Factories\Profiles\ItemProfile.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -84,30 +73,14 @@
     <Compile Include="Entities\Stats\StatModifier.cs" />
     <Compile Include="Entities\EntityStats.cs" />
     <Compile Include="Factories\Profiles\MapProfile.cs" />
-    <Compile Include="Global\NetworkAdapter.cs" />
-    <Compile Include="Global\Providers\FactoriesProvider.cs" />
+    <Compile Include="Network\NetworkAdapter.cs" />
     <Compile Include="Global\GameGlobal.cs" />
-    <Compile Include="Global\Providers\IDProvider.cs" />
-    <Compile Include="Global\Providers\TimeProvider.cs" />
-    <Compile Include="Global\Lookups\SkillStatInfo.cs" />
-    <Compile Include="Global\Lookups\SkillStatInfoFunction.cs" />
-    <Compile Include="Global\Lookups\WeaponStatInfo.cs" />
-    <Compile Include="Global\Lookups\WeaponStatInfoFunction.cs" />
-    <Compile Include="Items\Info\ItemClothingInfo.cs" />
-    <Compile Include="Items\Info\ItemArmorInfo.cs" />
-    <Compile Include="Items\Info\ItemConsumableInfo.cs" />
-    <Compile Include="Items\Info\ItemToolInfo.cs" />
-    <Compile Include="Items\Info\ItemWeaponInfo.cs" />
+    <Compile Include="Global\IDProvider.cs" />
+    <Compile Include="Global\TimeProvider.cs" />
+    <Compile Include="Global\SkillStatInfo.cs" />
     <Compile Include="Items\Item.cs" />
-    <Compile Include="Items\ItemAbilities.cs" />
-    <Compile Include="Items\ItemClass.cs" />
-    <Compile Include="Items\ItemEquipType.cs" />
-    <Compile Include="Items\Info\ItemInfo.cs" />
-    <Compile Include="Items\ItemQualityCode.cs" />
-    <Compile Include="Items\ItemType.cs" />
     <Compile Include="Worlds\Math\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Worlds\MapType.cs" />
     <Compile Include="Worlds\World.cs" />
     <Compile Include="Worlds\Map.cs" />
   </ItemGroup>
@@ -116,11 +89,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameData\GameData.csproj">
+      <Project>{296793ae-dc16-4850-8119-298f3966fcea}</Project>
+      <Name>GameData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Weighted-Item-Randomizer-for-C-Sharp\Weighted Randomizer\Weighted Randomizer.csproj">
       <Project>{1245bc96-2f42-404c-9f11-65a4326299d6}</Project>
       <Name>Weighted Randomizer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

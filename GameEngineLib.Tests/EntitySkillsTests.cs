@@ -1,6 +1,6 @@
-﻿using GameEngine;
+﻿using GameData;
+using GameEngine;
 using GameEngine.Entities;
-using GameEngine.Entities.Skills;
 using GameEngine.Global;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -19,7 +19,7 @@ namespace GameEngineLib.Tests {
 
         [TestInitialize]
         public void Setup() {
-            skillValues = new float[GameGlobal.SkillTypeCount];
+            skillValues = new float[Globals.SkillTypeCount];
             for (int i = 0; i < skillValues.Length; i++) {
                 skillValues[i] = (float)i;
             }

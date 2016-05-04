@@ -6,6 +6,7 @@ using GameEngine.Items;
 using GameEntities.Entities;
 using GameEngine;
 using GameEngine.Entities;
+using GameData;
 
 namespace GameEngineLib.Tests {
     [TestClass]

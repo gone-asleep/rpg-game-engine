@@ -1,4 +1,4 @@
-﻿using GameEngine.AI;
+﻿using GameData;
 using GameEngine.Effects;
 using GameEngine.Global;
 using GameEngine.Items;
@@ -157,33 +157,4 @@ namespace GameEngine.Entities {
             return false;
         }
     }
-
-    [Flags]
-    public enum GeneralAbilities : int {
-        ModifyGeneral = 1,
-        MoveInventory = 2,
-        Use = 4,
-        Give = 8,
-        
-        Receive = 64,
-        AddEffect = 128,
-        RemoveEffect = 256,
-        DistributeSkillPoints = 512,
-        Destroy = 1024,
-        TakeDamage = 2048,
-        GiveDamage = 4096,
-        All = Int32.MaxValue,
-        None = 0
-    }
-
-    
-
-    [Flags]
-    public enum EntityAbilities : long {
-        ModifyInterationAbilities = 1,
-        All = Int64.MaxValue,
-        None = 0
-    }
-
-
 }

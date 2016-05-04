@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameEngine;
-using GameEngine.Entities.Skills;
-using GameEngine.Entities.Stats;
 using GameEngine.Entities;
+using GameData;
 
 namespace GameEngineLib.Tests {
     [TestClass]
@@ -38,32 +37,5 @@ namespace GameEngineLib.Tests {
                 Assert.Fail();
             }
         }
-
-        [TestMethod]
-        public void NPCStatsCreate() {
-            try {
-                IEntityStats stats = new NPCStats();
-            } catch {
-                Assert.Fail();
-            }
-        }
-
-        [TestMethod]
-        public void NPCStatsCreateWithValues() {
-            try {
-                IEntityStats stats = new NPCStats(100, statDistributionValues);
-                Assert.AreEqual(stats.Get(StatType.Strength), Math.Floor(statDistributionValues[(int)StatType.Strength]*100));
-                Assert.AreEqual(stats.Get(StatType.Stamina), Math.Floor(statDistributionValues[(int)StatType.Stamina] * 100));
-                Assert.AreEqual(stats.Get(StatType.Wisdom), Math.Floor(statDistributionValues[(int)StatType.Wisdom] * 100));
-                Assert.AreEqual(stats.Get(StatType.Inteligence), Math.Floor(statDistributionValues[(int)StatType.Inteligence] * 100));
-                Assert.AreEqual(stats.Get(StatType.Charisma), Math.Floor(statDistributionValues[(int)StatType.Charisma] * 100));
-                Assert.AreEqual(stats.Get(StatType.Constitution), Math.Floor(statDistributionValues[(int)StatType.Constitution] * 100));
-                Assert.AreEqual(stats.Get(StatType.Luck), Math.Floor(statDistributionValues[(int)StatType.Luck] * 100));
-                Assert.AreEqual(stats.Get(StatType.Dexterity), Math.Floor(statDistributionValues[(int)StatType.Dexterity] * 100));
-            } catch {
-                Assert.Fail();
-            }
-        }
-
     }
 }

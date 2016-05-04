@@ -1,12 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GameData;
+using GameData.Info;
 using GameEngine;
-using GameEngine.Items;
-using GameEngine.Entities.Skills;
 using GameEngine.Entities;
-using GameEngine.Effects;
-using GameEngine.AI;
-using GameEngine.Items.Info;
+using GameEngine.Items;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace GameEngineLib.Tests {
     [TestClass]

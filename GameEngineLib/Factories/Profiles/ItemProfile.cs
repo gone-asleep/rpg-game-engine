@@ -1,4 +1,5 @@
-﻿using GameEngine.Entities;
+﻿using GameData;
+using GameEngine.Entities;
 using GameEngine.Items;
 using System;
 using System.Collections.Generic;

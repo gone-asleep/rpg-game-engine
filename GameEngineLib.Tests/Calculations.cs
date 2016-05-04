@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GameEngine.Entities.Stats;
+﻿using GameData;
 using GameEngine.Global;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
+
 namespace GameEngineLib.Tests {
     [TestClass]
     public class Calculations {
@@ -13,11 +14,11 @@ namespace GameEngineLib.Tests {
             float diff = baseMax - baseVal;
 
             float prefValue = (points * (baseVal + skew * diff)) / preferrence.Length;
-            float passValue = (points * (baseVal - (skew * (1.0f - 0.3333333f)) * diff)) / (GameGlobal.StatTypeCount - (neglected.Length + preferrence.Length));
+            float passValue = (points * (baseVal - (skew * (1.0f - 0.3333333f)) * diff)) / (Globals.StatTypeCount - (neglected.Length + preferrence.Length));
             float neglValue = (points * (baseVal - (skew * 0.3333333f) * diff)) / neglected.Length;
 
-            float[] stats = new float[GameGlobal.StatTypeCount];
-            for (int i = 0; i < GameGlobal.StatTypeCount; i++) {
+            float[] stats = new float[Globals.StatTypeCount];
+            for (int i = 0; i < Globals.StatTypeCount; i++) {
                 if (preferrence.Contains((StatType)i)) {
                     stats[i] = prefValue;
                 } else if (neglected.Contains((StatType)i)) {

@@ -1,4 +1,5 @@
-﻿using GameEngine.Entities.Stats;
+﻿using GameData;
+using GameEngine.Entities.Stats;
 using GameEngine.Global;
 using ProtoBuf;
 using System;
@@ -78,7 +79,7 @@ namespace GameEngine {
         }
 
         public StatModifier(StatValueModifier[] statModificationTable = null) {
-            this.Stats = new StatValueModifier[GameGlobal.StatTypeCount];
+            this.Stats = new StatValueModifier[Globals.StatTypeCount];
             if (statModificationTable != null) {
                 Array.Copy(statModificationTable, this.Stats, this.Stats.Length);
             }

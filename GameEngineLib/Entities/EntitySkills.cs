@@ -1,4 +1,4 @@
-﻿using GameEngine.Entities.Skills;
+﻿using GameData;
 using GameEngine.Entities.Stats;
 using GameEngine.Global;
 using ProtoBuf;
@@ -95,7 +95,7 @@ namespace GameEngine.Entities {
         /// <param name="statTable">A complete table of stat levels placed in the order in which they appear in the StatType enum</param>
         public EntitySkills(float[] skillTable = null) {
             this.skillPoints = 0;
-            this.skillStats = new float[GameGlobal.SkillTypeCount];
+            this.skillStats = new float[Globals.SkillTypeCount];
             if (skillTable != null) {
                 Array.Copy(skillTable, this.skillStats, this.skillStats.Length);
             }

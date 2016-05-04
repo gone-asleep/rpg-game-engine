@@ -1,14 +1,9 @@
-﻿using GameEngine.Entities;
+﻿using GameData;
+using GameData.Info;
 using GameEngine.Global;
 using GameEngine.Items;
-using GameEngine.Items.Info;
 using ProtoBuf;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine {
     [ProtoContract]
@@ -217,7 +212,7 @@ namespace GameEngine {
 
         }
         public Inventory(int inventorySize) {
-            this.innerList = new IItem[GameGlobal.TotalTypeCount - (61 - inventorySize)];
+            this.innerList = new IItem[Globals.TotalTypeCount - (61 - inventorySize)];
             this.Size = inventorySize;
             this.Remaining = inventorySize;
         }

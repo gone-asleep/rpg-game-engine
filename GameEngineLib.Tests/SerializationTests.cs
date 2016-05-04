@@ -1,19 +1,16 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GameData;
+using GameData.Info;
 using GameEngine;
-using ProtoBuf.Serializers;
-using ProtoBuf;
-using GameEngine.Items;
-using GameEngine.Entities.Stats;
 using GameEngine.Entities;
-using GameEngine.Entities.Skills;
-using GameEngine.AI;
-using GameEngine.Effects;
-using System.IO;
-using System.Diagnostics;
 using GameEngine.Global;
+using GameEngine.Items;
 using GameEntities.Items;
-using GameEngine.Items.Info;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProtoBuf;
+using System;
+using System.Diagnostics;
+using System.IO;
+
 namespace GameEngineLib.Tests {
     [TestClass]
     public class SerializationTests {
@@ -30,8 +27,8 @@ namespace GameEngineLib.Tests {
             Serializer.PrepareSerializer<IInventory>();
             Serializer.PrepareSerializer<IEntityStats>();
             Serializer.PrepareSerializer<IEntitySkills>();
-            
-            skillValues = new float[GameGlobal.SkillTypeCount];
+
+            skillValues = new float[Globals.SkillTypeCount];
             for (int i = 0; i < skillValues.Length; i++) {
                 skillValues[i] = (float)i;
             }
@@ -90,21 +87,6 @@ namespace GameEngineLib.Tests {
             Assert.AreEqual(statsClone.Get(StatType.Constitution), statsClone.Get(StatType.Constitution));
             Assert.AreEqual(statsClone.Get(StatType.Luck), statsClone.Get(StatType.Luck));
             Assert.AreEqual(statsClone.Get(StatType.Dexterity), statsClone.Get(StatType.Dexterity));
-        }
-
-        [TestMethod]
-        public void SerializeNPCStats() {
-            float[] statDistributionValues = new float[] { /*strength*/0.1f, /*Stamina*/0.1f, /*Wisdom*/0.3f, /*Inteligence*/0.1f, /*Charisma*/0.2f, /*Agility*/0.1f, /*Luck*/0.05f, /*Speed*/0.05f };
-            IEntityStats stats = new NPCStats(100, statDistributionValues);
-            IEntityStats statsClone = Serializer.DeepClone(stats);
-            Assert.AreEqual(statsClone.Get(StatType.Strength), Math.Floor(statDistributionValues[(int)StatType.Strength] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Stamina), Math.Floor(statDistributionValues[(int)StatType.Stamina] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Wisdom), Math.Floor(statDistributionValues[(int)StatType.Wisdom] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Inteligence), Math.Floor(statDistributionValues[(int)StatType.Inteligence] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Charisma), Math.Floor(statDistributionValues[(int)StatType.Charisma] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Constitution), Math.Floor(statDistributionValues[(int)StatType.Constitution] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Luck), Math.Floor(statDistributionValues[(int)StatType.Luck] * 100));
-            Assert.AreEqual(statsClone.Get(StatType.Dexterity), Math.Floor(statDistributionValues[(int)StatType.Dexterity] * 100));
         }
 
         [TestMethod]

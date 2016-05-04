@@ -1,12 +1,7 @@
-﻿using GameEngine.Global;
-using GameEngine.Items;
-using GameEngine.Items.Info;
+﻿using GameData;
+using GameData.Info;
 using ProtoBuf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Items {
     /// <summary>
